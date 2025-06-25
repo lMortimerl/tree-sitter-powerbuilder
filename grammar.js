@@ -9,20 +9,19 @@
 
 module.exports = grammar({
   name: "powerbuilder",
+  externals: $ => [
+    $.block_comment,
+  ],
   conflicts: ($) => [[$.expression, $.call_expression]],
-  extras: ($) => [/\s/, $.comment],
+  extras: ($) => [/\s/, $.block_comment, $.line_comment],
 
   rules: {
     source_file: ($) => repeat($._statement),
-    _definition: ($) => choice(),
-    _expression: ($) => choice($.identifier, $.number),
 
     /* PowerBuilder 2022 Language Basics */
     /* Comments */
-    comment: (_) =>
-      token(
-        choice(seq("//", /.*/), seq("/*", /[^*]*\*+([^/*][^*]*\*+)*/, "/")),
-      ),
+    comment: ($) => choice($.line_comment, $.block_comment),
+    line_comment: (_) => token(seq("//", /.*/)),
 
     /* Identifiers */
     identifier: ($) =>

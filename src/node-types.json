@@ -1485,6 +1485,11 @@
     "named": false
   },
   {
+    "type": "block_comment",
+    "named": true,
+    "extra": true
+  },
+  {
     "type": "boolean",
     "named": false
   },
@@ -1519,11 +1524,6 @@
   {
     "type": "close",
     "named": false
-  },
-  {
-    "type": "comment",
-    "named": true,
-    "extra": true
   },
   {
     "type": "create",
@@ -1616,6 +1616,11 @@
   {
     "type": "is",
     "named": false
+  },
+  {
+    "type": "line_comment",
+    "named": true,
+    "extra": true
   },
   {
     "type": "long",
