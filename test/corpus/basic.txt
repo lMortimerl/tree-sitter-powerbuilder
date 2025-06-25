@@ -1,0 +1,158 @@
+===
+Variable declaration - int a;
+===
+int a;
+---
+(source_file
+  (variable_declaration
+    (primitive_type)
+    (identifier)))
+
+===
+Variable declaration - int b;
+===
+int b;
+---
+(source_file
+  (variable_declaration
+    (primitive_type)
+    (identifier)))
+
+===
+Assignment - a = 1;
+===
+a = 1;
+---
+(source_file
+  (expression_statement
+    (expression
+      (assignment
+        (identifier)
+        (expression (number))))))
+
+===
+Assignment - b = 2;
+===
+b = 2;
+---
+(source_file
+  (expression_statement
+    (expression
+      (assignment
+        (identifier)
+        (expression (number))))))
+
+===
+Assignment with binary - a = b + 3;
+===
+a = b + 3;
+---
+(source_file
+  (expression_statement
+    (expression
+      (assignment
+        (identifier)
+        (expression
+          (binary_expression
+            (expression (identifier))
+            (expression (number))))))))
+
+===
+Assignment with binary - b = a + 4;
+===
+b = a + 4;
+---
+(source_file
+  (expression_statement
+    (expression
+      (assignment
+        (identifier)
+        (expression
+          (binary_expression
+            (expression (identifier))
+            (expression (number))))))))
+
+===
+Assignment with parens and binary - a = (b + a) * 5;
+===
+a = (b + a) * 5;
+---
+(source_file
+  (expression_statement
+    (expression
+      (assignment
+        (identifier)
+        (expression
+          (binary_expression
+            (expression
+              (parenthesized_expression
+                (expression
+                  (binary_expression
+                    (expression (identifier))
+                    (expression (identifier))))))
+            (expression (number))))))))
+
+===
+Assignment with parens and binary - b = (a + b) * 6;
+===
+b = (a + b) * 6;
+---
+(source_file
+  (expression_statement
+    (expression
+      (assignment
+        (identifier)
+        (expression
+          (binary_expression
+            (expression
+              (parenthesized_expression
+                (expression
+                  (binary_expression
+                    (expression (identifier))
+                    (expression (identifier))))))
+            (expression (number))))))))
+
+===
+Assignment with nested binaries - main = b + 7 * c + 8;
+===
+main = b + 7 * c + 8;
+---
+(source_file
+  (expression_statement
+    (expression
+      (assignment
+        (identifier)
+        (expression
+          (binary_expression
+            (expression
+              (binary_expression
+                (expression (identifier))
+                (expression (number))))
+            (expression
+              (binary_expression
+                (expression (identifier))
+                (expression (number))))))))))
+
+===
+Assignment with grouped nested binary - main = b + 7 * (c + 8);
+===
+main = b + 7 * (c + 8);
+---
+(source_file
+  (expression_statement
+    (expression
+      (assignment
+        (identifier)
+        (expression
+          (binary_expression
+            (expression (identifier))
+            (expression
+              (binary_expression
+                (expression
+                  (parenthesized_expression
+                    (expression
+                      (binary_expression
+                        (expression (identifier))
+                        (expression (number))))))
+                (expression (number))))))))))
+
