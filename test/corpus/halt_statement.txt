@@ -1,0 +1,43 @@
+===
+HALT Statement
+===
+
+halt
+
+---
+
+(source_file
+  (halt_statement))
+
+===
+HALT Statement - Semicolon
+===
+
+halt;
+
+---
+
+(source_file
+  (halt_statement))
+
+===
+HALT CLOSE Statement
+===
+
+halt close
+
+---
+
+(source_file
+  (halt_statement))
+
+===
+HALT CLOSE Statement - Semicolon
+===
+
+halt close;
+
+---
+
+(source_file
+  (halt_statement))

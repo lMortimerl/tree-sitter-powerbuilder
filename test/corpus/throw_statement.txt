@@ -1,0 +1,26 @@
+===
+THROW Statement
+===
+
+throw someException
+
+---
+
+(source_file
+  (throw_statement
+    (expression
+      (identifier))))
+
+===
+THROW Statement - Semicolon
+===
+
+throw someException;
+
+---
+
+(source_file
+  (throw_statement
+    (expression
+      (identifier))))
+

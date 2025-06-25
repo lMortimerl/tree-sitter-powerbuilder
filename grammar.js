@@ -164,6 +164,12 @@ module.exports = grammar({
         $.loop_statement,
         $.return_statement,
         $.try_statement,
+        $.throw_statement,
+        $.create_statement,
+        $.destroy_statement,
+        $.halt_statement,
+        $.choose_statement,
+        $.call_statement,
       ),
     label_statement: ($) => seq(field("name", $.identifier), ":"),
     goto_statement: ($) =>
@@ -224,7 +230,10 @@ module.exports = grammar({
           ),
         ),
       ),
-    return_statement: ($) => prec.right(seq("return", optional($.expression))),
+    return_statement: ($) =>
+      prec.right(seq("return", optional($.expression), optional(";"))),
+    throw_statement: ($) =>
+      seq("throw", field("expression", $.expression), optional(";")),
     try_statement: ($) =>
       seq(
         "try",
@@ -244,6 +253,43 @@ module.exports = grammar({
         repeat($._statement),
       ),
     finally_clause: ($) => seq("finally", repeat($._statement)),
+    create_statement: ($) =>
+      seq("create", optional("using"), $.identifier, optional(";")),
+    destroy_statement: ($) => seq("destroy", $.identifier, optional(";")),
+    halt_statement: ($) => seq("halt", optional("close"), optional(";")),
+    choose_statement: ($) =>
+      seq(
+        "choose",
+        "case",
+        field("value", $.expression),
+        repeat($.case_clause),
+        optional($.case_else_clause),
+        "end",
+        "choose",
+      ),
+    case_clause: ($) =>
+      seq(
+        "case",
+        field("conditions", $.case_expression_list),
+        repeat($._statement),
+      ),
+    case_else_clause: ($) => seq("case", "else", repeat($._statement)),
+    case_expression_list: ($) =>
+      seq($.case_expression, repeat(seq(",", $.case_expression))),
+    case_expression: ($) =>
+      choice(
+        $.expression,
+        seq("is", choice("<", ">", "<=", ">=", "<>", "="), $.expression),
+        seq($.expression, "to", $.expression),
+      ),
+    call_statement: ($) =>
+      seq(
+        "call",
+        field("ancestor_object", $.identifier),
+        optional(seq("`", field("control_name", $.identifier))),
+        "::",
+        field("event", $.identifier),
+      ),
 
     /* Expressions */
     expression: ($) =>

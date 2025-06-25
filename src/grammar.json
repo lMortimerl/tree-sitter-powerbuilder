@@ -644,6 +644,30 @@
         {
           "type": "SYMBOL",
           "name": "try_statement"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "throw_statement"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "create_statement"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "destroy_statement"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "halt_statement"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "choose_statement"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "call_statement"
         }
       ]
     },
@@ -1058,9 +1082,50 @@
                 "type": "BLANK"
               }
             ]
+          },
+          {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "STRING",
+                "value": ";"
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
           }
         ]
       }
+    },
+    "throw_statement": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "throw"
+        },
+        {
+          "type": "FIELD",
+          "name": "expression",
+          "content": {
+            "type": "SYMBOL",
+            "name": "expression"
+          }
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "STRING",
+              "value": ";"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        }
+      ]
     },
     "try_statement": {
       "type": "SEQ",
@@ -1157,6 +1222,340 @@
           "content": {
             "type": "SYMBOL",
             "name": "_statement"
+          }
+        }
+      ]
+    },
+    "create_statement": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "create"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "STRING",
+              "value": "using"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "SYMBOL",
+          "name": "identifier"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "STRING",
+              "value": ";"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        }
+      ]
+    },
+    "destroy_statement": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "destroy"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "identifier"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "STRING",
+              "value": ";"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        }
+      ]
+    },
+    "halt_statement": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "halt"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "STRING",
+              "value": "close"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "STRING",
+              "value": ";"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        }
+      ]
+    },
+    "choose_statement": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "choose"
+        },
+        {
+          "type": "STRING",
+          "value": "case"
+        },
+        {
+          "type": "FIELD",
+          "name": "value",
+          "content": {
+            "type": "SYMBOL",
+            "name": "expression"
+          }
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
+            "name": "case_clause"
+          }
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "case_else_clause"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "STRING",
+          "value": "end"
+        },
+        {
+          "type": "STRING",
+          "value": "choose"
+        }
+      ]
+    },
+    "case_clause": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "case"
+        },
+        {
+          "type": "FIELD",
+          "name": "conditions",
+          "content": {
+            "type": "SYMBOL",
+            "name": "case_expression_list"
+          }
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_statement"
+          }
+        }
+      ]
+    },
+    "case_else_clause": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "case"
+        },
+        {
+          "type": "STRING",
+          "value": "else"
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_statement"
+          }
+        }
+      ]
+    },
+    "case_expression_list": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "case_expression"
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "STRING",
+                "value": ","
+              },
+              {
+                "type": "SYMBOL",
+                "name": "case_expression"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "case_expression": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "expression"
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "STRING",
+              "value": "is"
+            },
+            {
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": "<"
+                },
+                {
+                  "type": "STRING",
+                  "value": ">"
+                },
+                {
+                  "type": "STRING",
+                  "value": "<="
+                },
+                {
+                  "type": "STRING",
+                  "value": ">="
+                },
+                {
+                  "type": "STRING",
+                  "value": "<>"
+                },
+                {
+                  "type": "STRING",
+                  "value": "="
+                }
+              ]
+            },
+            {
+              "type": "SYMBOL",
+              "name": "expression"
+            }
+          ]
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "expression"
+            },
+            {
+              "type": "STRING",
+              "value": "to"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "expression"
+            }
+          ]
+        }
+      ]
+    },
+    "call_statement": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "call"
+        },
+        {
+          "type": "FIELD",
+          "name": "ancestor_object",
+          "content": {
+            "type": "SYMBOL",
+            "name": "identifier"
+          }
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": "`"
+                },
+                {
+                  "type": "FIELD",
+                  "name": "control_name",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "identifier"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "STRING",
+          "value": "::"
+        },
+        {
+          "type": "FIELD",
+          "name": "event",
+          "content": {
+            "type": "SYMBOL",
+            "name": "identifier"
           }
         }
       ]

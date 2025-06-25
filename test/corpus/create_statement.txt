@@ -1,0 +1,48 @@
+===
+CREATE Statement
+===
+
+create someClass
+
+---
+
+(source_file
+  (create_statement
+    (identifier)))
+
+===
+CREATE Statement - Semicolon
+===
+
+create someClass;
+
+---
+
+(source_file
+  (create_statement
+    (identifier)))
+
+===
+CREATE USING Statement
+===
+
+create using someClass
+
+---
+
+(source_file
+  (create_statement
+    (identifier)))
+
+===
+CREATE USING Statement - Semicolon
+===
+
+create using someClass;
+
+---
+
+(source_file
+  (create_statement
+    (identifier)))
+

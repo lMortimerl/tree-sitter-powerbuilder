@@ -1,0 +1,23 @@
+===
+DESTROY Statement
+===
+
+destroy someObject
+
+---
+
+(source_file
+  (destroy_statement
+    (identifier)))
+
+===
+DESTROY Statement - Semicolon
+===
+
+destroy someObject;
+
+---
+
+(source_file
+  (destroy_statement
+    (identifier)))

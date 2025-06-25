@@ -25,3 +25,30 @@ func_call();
     (expression
       (call_expression
         function: (identifier)))))
+
+===
+Call statement - ancestor event
+===
+
+call w_emp::Open
+
+---
+
+(source_file
+  (call_statement
+    ancestor_object: (identifier)
+    event: (identifier)))
+
+===
+Call statement - ancestor control event
+===
+
+call w_emp`cb_close::Clicked
+
+---
+
+(source_file
+  (call_statement
+    ancestor_object: (identifier)
+    control_name: (identifier)
+    event: (identifier)))
