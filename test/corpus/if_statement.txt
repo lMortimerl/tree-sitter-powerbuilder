@@ -1,0 +1,122 @@
+==========================
+Simple IF...END IF Statement
+==========================
+
+if a = 10 then
+  return true
+end if
+
+---
+
+(source_file
+  (if_statement
+    condition: (expression
+        (binary_expression
+            left: (expression
+                (identifier))
+            right: (expression
+                (number))))
+    (return_statement
+        (expression
+            (boolean)))))
+
+===
+Simple IF...ELSE...END IF Statement
+===
+
+if a = 10 then
+    return true
+else
+    return false
+end if
+
+---
+
+(source_file
+    (if_statement
+        condition: (expression
+            (binary_expression
+                left: (expression
+                    (identifier))
+                right: (expression
+                    (number))))
+        (return_statement
+            (expression
+                (boolean)))
+        (else_clause
+          (return_statement
+            (expression
+              (boolean))))))
+
+===
+Simple IF...ELSEIF...END IF Statement
+===
+
+if a = 10 then
+    return true
+elseif a = 11 then
+    return false
+end if
+
+---
+
+(source_file
+  (if_statement
+    condition: (expression
+      (binary_expression
+        left: (expression
+          (identifier))
+        right: (expression
+          (number))))
+    (return_statement
+      (expression
+        (boolean)))
+    (elseif_clause
+      condition: (expression
+        (binary_expression
+          left: (expression
+            (identifier))
+          right: (expression
+            (number))))
+      (return_statement
+        (expression
+          (boolean))))))
+===
+Simple IF...ELSEIF...ELSE..END IF Statement
+===
+
+if a = 10 then
+    return true
+elseif a = 11 then
+    return false
+else
+    return false
+end if
+
+---
+
+(source_file
+  (if_statement
+    condition: (expression
+      (binary_expression
+        left: (expression
+          (identifier))
+        right: (expression
+          (number))))
+    (return_statement
+      (expression
+        (boolean)))
+    (elseif_clause
+      condition: (expression
+        (binary_expression
+          left: (expression
+            (identifier))
+          right: (expression
+            (number))))
+      (return_statement
+        (expression
+          (boolean))))
+    (else_clause
+      (return_statement
+        (expression
+          (boolean))))))

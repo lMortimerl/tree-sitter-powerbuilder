@@ -1,0 +1,19 @@
+===
+Variable declaration
+===
+int a;
+---
+(source_file
+  (variable_declaration
+    (primitive_type)
+    (identifier)))
+
+===
+Variable declaration - Semicolon
+===
+int b;
+---
+(source_file
+  (variable_declaration
+    (primitive_type)
+    (identifier)))

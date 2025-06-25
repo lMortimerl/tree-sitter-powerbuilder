@@ -9,6 +9,7 @@
 
 module.exports = grammar({
   name: "powerbuilder",
+  conflicts: ($) => [[$.expression, $.call_expression]],
 
   extras: ($) => [/\s/, $.comment],
   rules: {
@@ -16,7 +17,10 @@ module.exports = grammar({
     _type: ($) => choice($.primitive_type, $.array_type),
     _definition: ($) => choice(),
     _expression: ($) => choice($.identifier, $.number),
-    comment: (_) => token(choice(seq("//", /.*/))),
+    comment: (_) =>
+      token(
+        choice(seq("//", /.*/, seq("/*", /[^*]*\*+([^/*][^*]*\*+)*/, "/"))),
+      ),
     identifier: ($) => /[a-zA-Z][a-zA-Z0-9\$\_]*/,
     number: ($) => /\d+(\.\d+)?/,
     string: ($) => token(seq('"', repeat(choice(/[^"\\\n]/, /\\./)), '"')),
@@ -97,16 +101,83 @@ module.exports = grammar({
         "unsignedlong",
         "ulong",
       ),
-    array_type: ($) => seq($._type, "[", "]"),
+    array_type: ($) => seq($._type, "[", optional($.array_dimensions), "]"),
+    array_dimensions: ($) => seq($.expression, repeat(seq(",", $.expression))),
     /* Statements */
-    _statement: ($) => choice($.variable_declaration, $.expression_statement),
+    _statement: ($) =>
+      choice(
+        $.expression_statement,
+        $.variable_declaration,
+        $.if_statement,
+        $.for_statement,
+        $.loop_statement,
+        $.try_catch_statement,
+        $.return_statement,
+      ),
     variable_declaration: ($) => seq($._type, $.identifier, optional(";")),
-
     expression_statement: ($) => seq($.expression, optional(";")),
+    if_statement: ($) =>
+      seq(
+        "if",
+        field("condition", $.expression),
+        "then",
+        repeat($._statement),
+        repeat($.elseif_clause),
+        optional($.else_clause),
+        "end",
+        "if",
+      ),
+    elseif_clause: ($) =>
+      seq(
+        "elseif",
+        field("condition", $.expression),
+        "then",
+        repeat($._statement),
+      ),
+    else_clause: ($) => seq("else", repeat($._statement)),
+    for_statement: ($) =>
+      seq(
+        "for",
+        field("start", $.assignment),
+        "to",
+        field("end", $.expression),
+        optional(field("step", seq("step", $.expression))),
+        field("body", repeat($._statement)),
+        choice("next", seq("end", "for")),
+      ),
+    loop_statement: ($) =>
+      seq(
+        "do",
+        choice(
+          seq(
+            "until",
+            field("condition", $.expression),
+            field("body", repeat($._statement)),
+            "loop",
+          ),
+          seq(
+            "while",
+            field("condition", $.expression),
+            field("body", repeat($._statement)),
+            "loop",
+          ),
+          seq(
+            field("body", repeat($._statement)),
+            "loop",
+            choice(
+              seq("while", field("condition", $.expression)),
+              seq("until", field("condition", $.expression)),
+            ),
+          ),
+        ),
+      ),
+    return_statement: ($) => prec.right(seq("return", optional($.expression))),
+
+    /* Expressions */
     expression: ($) =>
       choice(
-        $.assignment,
         $.binary_expression,
+        $.call_expression,
         $.identifier,
         $.number,
         $.string,
@@ -114,7 +185,7 @@ module.exports = grammar({
         $.null,
         $.parenthesized_expression,
       ),
-    assignment: ($) => prec.right(seq($.identifier, "=", $.expression)),
+    assignment: ($) => seq($.identifier, "=", $.expression),
     binary_expression: ($) =>
       choice(
         ...[
@@ -127,13 +198,27 @@ module.exports = grammar({
           ["<=", 5],
           [">=", 5],
           ["<>", 5],
-          ["==", 5],
+          ["=", 5],
           ["and", 2],
           ["or", 1],
         ].map(([operator, precedence]) =>
-          prec.left(precedence, seq($.expression, operator, $.expression)),
+          prec.left(
+            precedence,
+            seq(
+              field("left", $.expression),
+              operator,
+              field("right", $.expression),
+            ),
+          ),
         ),
       ),
     parenthesized_expression: ($) => seq("(", $.expression, ")"),
+    call_expression: ($) =>
+      seq(
+        field("function", $.identifier),
+        "(",
+        optional(seq($.expression, repeat(seq(",", $.expression)))),
+        ")",
+      ),
   },
 });

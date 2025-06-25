@@ -1,0 +1,119 @@
+===
+Simple DO UNTIL...LOOP Statement
+===
+
+do until a = 10
+    a = a + 1
+loop
+
+---
+
+(source_file
+  (loop_statement
+    condition: (expression
+      (binary_expression
+        left: (expression
+          (identifier))
+        right: (expression
+          (number))))
+    body: (expression_statement
+      (expression
+        (binary_expression
+          left: (expression
+            (identifier))
+          right: (expression
+            (binary_expression
+              left: (expression
+                (identifier))
+              right: (expression
+                (number)))))))))
+
+===
+Simple DO WHILE...LOOP Statement
+===
+
+do while a = 10
+    a = a + 1
+loop
+
+---
+
+(source_file
+  (loop_statement
+    condition: (expression
+      (binary_expression
+        left: (expression
+          (identifier))
+        right: (expression
+          (number))))
+    body: (expression_statement
+      (expression
+        (binary_expression
+          left: (expression
+            (identifier))
+          right: (expression
+            (binary_expression
+              left: (expression
+                (identifier))
+              right: (expression
+                (number)))))))))
+
+===
+Simple DO...LOOP UNTIL Statement
+===
+
+do
+    a = a + 1
+loop until a = 10
+
+---
+
+(source_file
+  (loop_statement
+    body: (expression_statement
+      (expression
+        (binary_expression
+          left: (expression
+            (identifier))
+          right: (expression
+            (binary_expression
+              left: (expression
+                (identifier))
+              right: (expression
+                (number)))))))
+    condition: (expression
+            (binary_expression
+                left: (expression
+                    (identifier))
+                right: (expression
+                    (number))))))
+
+===
+Simple DO...LOOP WHILE Statement
+===
+
+do
+    a = a + 1
+loop while a = 10
+
+---
+
+(source_file
+  (loop_statement
+    body: (expression_statement
+      (expression
+        (binary_expression
+          left: (expression
+            (identifier))
+          right: (expression
+            (binary_expression
+              left: (expression
+                (identifier))
+              right: (expression
+                (number)))))))
+    condition: (expression
+            (binary_expression
+                left: (expression
+                    (identifier))
+                right: (expression
+                    (number))))))

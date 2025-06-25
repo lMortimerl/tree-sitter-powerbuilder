@@ -1,0 +1,95 @@
+===
+Simple FOR...NEXT Statement
+===
+
+for a = 0 to 25
+    func()
+next
+
+---
+
+(source_file
+  (for_statement
+    start: (assignment
+        (identifier)
+        (expression
+            (number)))
+    end: (expression
+        (number))
+    body: (expression_statement
+        (expression
+            (call_expression
+                function: (identifier))))))
+
+===
+Simple FOR...NEXT Statement (With STEP)
+===
+
+for a = 0 to 25 step 2
+    func()
+next
+
+---
+
+(source_file
+  (for_statement
+    start: (assignment
+        (identifier)
+        (expression
+            (number)))
+    end: (expression
+        (number))
+    step: (expression
+        (number))
+    body: (expression_statement
+        (expression
+            (call_expression
+                function: (identifier))))))
+
+===
+Simple FOR...END FOR Statement
+===
+
+for a = 0 to 25
+    func()
+end for
+
+---
+
+(source_file
+  (for_statement
+    start: (assignment
+        (identifier)
+        (expression
+            (number)))
+    end: (expression
+        (number))
+    body: (expression_statement
+        (expression
+            (call_expression
+                function: (identifier))))))
+
+===
+Simple FOR...END FOR Statement (With STEP)
+===
+
+for a = 0 to 25 step 2
+    func()
+end for
+
+---
+
+(source_file
+  (for_statement
+    start: (assignment
+        (identifier)
+        (expression
+            (number)))
+    end: (expression
+        (number))
+    step: (expression
+        (number))
+    body: (expression_statement
+        (expression
+            (call_expression
+                function: (identifier))))))
