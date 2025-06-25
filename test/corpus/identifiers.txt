@@ -1,0 +1,31 @@
+===
+Valid identifiers
+===
+name
+_value
+max_value$1
+salary%increase
+user-id
+part#number123
+
+---
+
+(source_file
+    (expression_statement
+        (expression
+            (identifier)))
+    (expression_statement
+        (expression
+            (identifier)))
+    (expression_statement
+        (expression
+            (identifier)))
+    (expression_statement
+        (expression
+            (identifier)))
+    (expression_statement
+        (expression
+            (identifier)))
+    (expression_statement
+        (expression
+            (identifier))))

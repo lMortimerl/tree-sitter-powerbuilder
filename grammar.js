@@ -10,8 +10,8 @@
 module.exports = grammar({
   name: "powerbuilder",
   conflicts: ($) => [[$.expression, $.call_expression]],
-
   extras: ($) => [/\s/, $.comment],
+
   rules: {
     source_file: ($) => repeat($._statement),
     _type: ($) => choice($.primitive_type, $.array_type),
@@ -19,11 +19,40 @@ module.exports = grammar({
     _expression: ($) => choice($.identifier, $.number),
     comment: (_) =>
       token(
-        choice(seq("//", /.*/, seq("/*", /[^*]*\*+([^/*][^*]*\*+)*/, "/"))),
+        choice(seq("//", /.*/), seq("/*", /[^*]*\*+([^/*][^*]*\*+)*/, "/")),
       ),
-    identifier: ($) => /[a-zA-Z][a-zA-Z0-9\$\_]*/,
+    identifier: ($) =>
+      token(new RegExp("[a-zA-Z_]" + "[a-zA-Z0-9_\\-\\$#%]{0,39}")),
     number: ($) => /\d+(\.\d+)?/,
-    string: ($) => token(seq('"', repeat(choice(/[^"\\\n]/, /\\./)), '"')),
+    string: ($) =>
+      seq(
+        '"',
+        repeat(
+          choice(
+            // Normal characters except for quotes and tildes
+            token.immediate(/[^\n"~]+/),
+            // Escaped tilde sequences
+            $.escape_sequence,
+          ),
+        ),
+        '"',
+      ),
+    escape_sequence: ($) =>
+      token.immediate(
+        seq(
+          "~",
+          choice(
+            // Common escapes
+            /[ntvrfb"'\~]/,
+            // Decimal ASCII (~000 to ~255)
+            /[0-9]{3}/,
+            // Hexadecimal (~h01 to ~hFF)
+            /h[0-9A-Fa-f]{2}/,
+            // Octal (~o000 to ~o377)
+            /o[0-7]{3}/,
+          ),
+        ),
+      ),
     boolean: (_) => choice("true", "false"),
     null: (_) => "null",
     operator: (_) =>
@@ -111,7 +140,6 @@ module.exports = grammar({
         $.if_statement,
         $.for_statement,
         $.loop_statement,
-        $.try_catch_statement,
         $.return_statement,
       ),
     variable_declaration: ($) => seq($._type, $.identifier, optional(";")),

@@ -54,23 +54,23 @@
               {
                 "type": "PATTERN",
                 "value": ".*"
+              }
+            ]
+          },
+          {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "STRING",
+                "value": "/*"
               },
               {
-                "type": "SEQ",
-                "members": [
-                  {
-                    "type": "STRING",
-                    "value": "/*"
-                  },
-                  {
-                    "type": "PATTERN",
-                    "value": "[^*]*\\*+([^/*][^*]*\\*+)*"
-                  },
-                  {
-                    "type": "STRING",
-                    "value": "/"
-                  }
-                ]
+                "type": "PATTERN",
+                "value": "[^*]*\\*+([^/*][^*]*\\*+)*"
+              },
+              {
+                "type": "STRING",
+                "value": "/"
               }
             ]
           }
@@ -78,41 +78,77 @@
       }
     },
     "identifier": {
-      "type": "PATTERN",
-      "value": "[a-zA-Z][a-zA-Z0-9\\$\\_]*"
+      "type": "TOKEN",
+      "content": {
+        "type": "PATTERN",
+        "value": "[a-zA-Z_][a-zA-Z0-9_\\-\\$#%]{0,39}"
+      }
     },
     "number": {
       "type": "PATTERN",
       "value": "\\d+(\\.\\d+)?"
     },
     "string": {
-      "type": "TOKEN",
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "\""
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "IMMEDIATE_TOKEN",
+                "content": {
+                  "type": "PATTERN",
+                  "value": "[^\\n\"~]+"
+                }
+              },
+              {
+                "type": "SYMBOL",
+                "name": "escape_sequence"
+              }
+            ]
+          }
+        },
+        {
+          "type": "STRING",
+          "value": "\""
+        }
+      ]
+    },
+    "escape_sequence": {
+      "type": "IMMEDIATE_TOKEN",
       "content": {
         "type": "SEQ",
         "members": [
           {
             "type": "STRING",
-            "value": "\""
+            "value": "~"
           },
           {
-            "type": "REPEAT",
-            "content": {
-              "type": "CHOICE",
-              "members": [
-                {
-                  "type": "PATTERN",
-                  "value": "[^\"\\\\\\n]"
-                },
-                {
-                  "type": "PATTERN",
-                  "value": "\\\\."
-                }
-              ]
-            }
-          },
-          {
-            "type": "STRING",
-            "value": "\""
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "PATTERN",
+                "value": "[ntvrfb\"'\\~]"
+              },
+              {
+                "type": "PATTERN",
+                "value": "[0-9]{3}"
+              },
+              {
+                "type": "PATTERN",
+                "value": "h[0-9A-Fa-f]{2}"
+              },
+              {
+                "type": "PATTERN",
+                "value": "o[0-7]{3}"
+              }
+            ]
           }
         ]
       }
@@ -487,10 +523,6 @@
         },
         {
           "type": "SYMBOL",
-          "name": "try_catch_statement"
-        },
-        {
-          "type": "SYMBOL",
           "name": "return_statement"
         }
       ]
@@ -861,65 +893,6 @@
               ]
             }
           ]
-        }
-      ]
-    },
-    "try_catch_statement": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "STRING",
-          "value": "try"
-        },
-        {
-          "type": "REPEAT",
-          "content": {
-            "type": "SYMBOL",
-            "name": "_statement"
-          }
-        },
-        {
-          "type": "STRING",
-          "value": "catch"
-        },
-        {
-          "type": "REPEAT",
-          "content": {
-            "type": "SYMBOL",
-            "name": "_statement"
-          }
-        },
-        {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "SEQ",
-              "members": [
-                {
-                  "type": "STRING",
-                  "value": "finally"
-                },
-                {
-                  "type": "REPEAT",
-                  "content": {
-                    "type": "SYMBOL",
-                    "name": "_statement"
-                  }
-                }
-              ]
-            },
-            {
-              "type": "BLANK"
-            }
-          ]
-        },
-        {
-          "type": "STRING",
-          "value": "end"
-        },
-        {
-          "type": "STRING",
-          "value": "try"
         }
       ]
     },

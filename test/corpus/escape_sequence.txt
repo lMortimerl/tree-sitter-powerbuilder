@@ -1,0 +1,15 @@
+===========================
+String with escapes
+===========================
+
+"This~nIs~tTabbed~h20"
+
+---
+
+(source_file
+  (expression_statement
+    (expression
+      (string
+        (escape_sequence)
+        (escape_sequence)
+        (escape_sequence)))))

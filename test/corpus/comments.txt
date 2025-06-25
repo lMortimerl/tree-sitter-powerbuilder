@@ -1,0 +1,44 @@
+===
+Singleline comment
+===
+
+func_call()
+// This is a comment!
+func_call();
+
+---
+
+(source_file
+  (expression_statement
+    (expression
+      (call_expression
+        function: (identifier))))
+  (comment)
+  (expression_statement
+    (expression
+      (call_expression
+        function: (identifier)))))
+
+===
+Multiline comment
+===
+
+func_call()
+/* This comment
+ * uses
+ * multiple lines!
+ */
+func_call()
+
+---
+
+(source_file
+  (expression_statement
+    (expression
+      (call_expression
+        function: (identifier))))
+  (comment)
+  (expression_statement
+    (expression
+      (call_expression
+        function: (identifier)))))

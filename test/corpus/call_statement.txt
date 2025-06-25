@@ -1,0 +1,27 @@
+===
+Simple call statement
+===
+
+func_call()
+            
+---
+
+(source_file
+  (expression_statement
+    (expression
+      (call_expression
+        function: (identifier)))))
+
+===
+Simple call statement - Semicolon
+===
+
+func_call();
+            
+---
+
+(source_file
+  (expression_statement
+    (expression
+      (call_expression
+        function: (identifier)))))
