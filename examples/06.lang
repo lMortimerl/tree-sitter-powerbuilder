@@ -1,0 +1,3 @@
+string ls1, ls2, ls3
+long ll3
+ll3 = dw_z.getrow()

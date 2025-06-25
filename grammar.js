@@ -184,11 +184,15 @@ module.exports = grammar({
         "if",
         field("condition", $.expression),
         "then",
-        repeat($._statement),
-        repeat($.elseif_clause),
-        optional($.else_clause),
-        "end",
-        "if",
+        choice(
+          prec(1, $.return_statement),
+          seq(repeat($._statement),
+            repeat($.elseif_clause),
+            optional($.else_clause),
+            "end",
+            "if",
+          ),
+        ),
       ),
     elseif_clause: ($) =>
       seq(
