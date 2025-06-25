@@ -14,30 +14,21 @@ module.exports = grammar({
 
   rules: {
     source_file: ($) => repeat($._statement),
-    _type: ($) => choice($.primitive_type),
     _definition: ($) => choice(),
     _expression: ($) => choice($.identifier, $.number),
-    modifiers: ($) => choice("public", "private", "global"),
-    variable_declarator: ($) =>
-      seq(
-        field("name", $.identifier),
-        optional($.array_dimensions),
-        optional(seq("=", field("value", $.expression))),
-      ),
-    variable_declaration: ($) =>
-      seq(
-        optional($.modifiers),
-        $._type,
-        $.variable_declarator,
-        repeat(seq(",", $.variable_declarator)),
-        optional(";"),
-      ),
+
+    /* PowerBuilder 2022 Language Basics */
+    /* Comments */
     comment: (_) =>
       token(
         choice(seq("//", /.*/), seq("/*", /[^*]*\*+([^/*][^*]*\*+)*/, "/")),
       ),
+
+    /* Identifiers */
     identifier: ($) =>
       token(new RegExp("[a-zA-Z_]" + "[a-zA-Z0-9_\\-\\$#%]{0,39}")),
+
+    /* Literals */
     number: ($) => /\d+(\.\d+)?/,
     string: ($) =>
       seq(
@@ -70,54 +61,15 @@ module.exports = grammar({
       ),
     boolean: (_) => choice("true", "false"),
     null: (_) => "null",
-    operator: (_) =>
-      token(
-        choice(
-          "+",
-          "-",
-          "*",
-          "/",
-          "=",
-          "<",
-          ">",
-          "<=",
-          ">=",
-          "<>",
-          "==",
-          "and",
-          "or",
-          "not",
-        ),
+    array_literal: ($) =>
+      seq(
+        "{",
+        optional(seq($.expression, repeat(seq(",", $.expression)))),
+        "}",
       ),
-    keywords: (_) =>
-      choice(
-        "if",
-        "then",
-        "else",
-        "elseif",
-        "end if",
-        "for",
-        "to",
-        "next",
-        "do",
-        "loop",
-        "while",
-        "try",
-        "catch",
-        "finally",
-        "return",
-        "function",
-        "end function",
-        "global",
-        "public",
-        "private",
-        "integer",
-        "string",
-        "boolean",
-        "long",
-        "blob",
-        "decimal",
-      ),
+
+    /* Types */
+    _type: ($) => choice($.primitive_type),
     primitive_type: ($) =>
       choice(
         "any",
@@ -145,11 +97,64 @@ module.exports = grammar({
         "unsignedlong",
         "ulong",
       ),
-    array_dimensions: ($) =>
+
+    /* Expressions */
+    expression: ($) =>
+      choice(
+        $.binary_expression,
+        $.call_expression,
+        $.member_expression,
+        $.identifier,
+        $.number,
+        $.string,
+        $.boolean,
+        $.null,
+        $.parenthesized_expression,
+        $.array_literal,
+      ),
+    assignment: ($) => seq($.identifier, "=", $.expression),
+    member_expression: ($) =>
+      prec.left(
+        18,
+        seq(
+          field("object", $.expression),
+          ".",
+          field("property", $.identifier),
+        ),
+      ),
+    binary_expression: ($) =>
+      choice(
+        ...[
+          ["+", 10],
+          ["-", 10],
+          ["*", 20],
+          ["/", 20],
+          ["<", 5],
+          [">", 5],
+          ["<=", 5],
+          [">=", 5],
+          ["<>", 5],
+          ["=", 5],
+          ["and", 2],
+          ["or", 1],
+        ].map(([operator, precedence]) =>
+          prec.left(
+            precedence,
+            seq(
+              field("left", $.expression),
+              operator,
+              field("right", $.expression),
+            ),
+          ),
+        ),
+      ),
+    parenthesized_expression: ($) => seq("(", $.expression, ")"),
+    call_expression: ($) =>
       seq(
-        "[",
+        field("function", $.identifier),
+        "(",
         optional(seq($.expression, repeat(seq(",", $.expression)))),
-        "]",
+        ")",
       ),
 
     /* Statements */
@@ -291,69 +296,74 @@ module.exports = grammar({
         field("event", $.identifier),
       ),
 
-    /* Expressions */
-    expression: ($) =>
-      choice(
-        $.binary_expression,
-        $.call_expression,
-        $.member_expression,
-        $.identifier,
-        $.number,
-        $.string,
-        $.boolean,
-        $.null,
-        $.parenthesized_expression,
-        $.array_literal,
-      ),
-    assignment: ($) => seq($.identifier, "=", $.expression),
-    array_literal: ($) =>
+    modifiers: ($) => choice("public", "private", "global"),
+    variable_declarator: ($) =>
       seq(
-        "{",
-        optional(seq($.expression, repeat(seq(",", $.expression)))),
-        "}",
+        field("name", $.identifier),
+        optional($.array_dimensions),
+        optional(seq("=", field("value", $.expression))),
       ),
-    member_expression: ($) =>
-      prec.left(
-        18,
-        seq(
-          field("object", $.expression),
-          ".",
-          field("property", $.identifier),
+    variable_declaration: ($) =>
+      seq(
+        optional($.modifiers),
+        $._type,
+        $.variable_declarator,
+        repeat(seq(",", $.variable_declarator)),
+        optional(";"),
+      ),
+    array_dimensions: ($) =>
+      seq(
+        "[",
+        optional(seq($.expression, repeat(seq(",", $.expression)))),
+        "]",
+      ),
+    operator: (_) =>
+      token(
+        choice(
+          "+",
+          "-",
+          "*",
+          "/",
+          "=",
+          "<",
+          ">",
+          "<=",
+          ">=",
+          "<>",
+          "==",
+          "and",
+          "or",
+          "not",
         ),
       ),
-    binary_expression: ($) =>
+    keywords: (_) =>
       choice(
-        ...[
-          ["+", 10],
-          ["-", 10],
-          ["*", 20],
-          ["/", 20],
-          ["<", 5],
-          [">", 5],
-          ["<=", 5],
-          [">=", 5],
-          ["<>", 5],
-          ["=", 5],
-          ["and", 2],
-          ["or", 1],
-        ].map(([operator, precedence]) =>
-          prec.left(
-            precedence,
-            seq(
-              field("left", $.expression),
-              operator,
-              field("right", $.expression),
-            ),
-          ),
-        ),
-      ),
-    parenthesized_expression: ($) => seq("(", $.expression, ")"),
-    call_expression: ($) =>
-      seq(
-        field("function", $.identifier),
-        "(",
-        optional(seq($.expression, repeat(seq(",", $.expression)))),
-        ")",
+        "if",
+        "then",
+        "else",
+        "elseif",
+        "end if",
+        "for",
+        "to",
+        "next",
+        "do",
+        "loop",
+        "while",
+        "try",
+        "catch",
+        "finally",
+        "return",
+        "function",
+        "end function",
+        "global",
+        "public",
+        "private",
+        "integer",
+        "string",
+        "boolean",
+        "long",
+        "blob",
+        "decimal",
       ),
   },
 });
