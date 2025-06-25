@@ -1,0 +1,68 @@
+===
+Simple TRY...CATCH...END TRY Statement
+===
+
+try
+  doSomething()
+catch (IOException e)
+  log(e.message)
+end try
+
+---
+
+(source_file
+  (try_statement
+    (expression_statement
+      (expression
+        (call_expression
+          (identifier))))
+    (catch_clause
+      (identifier)
+      (identifier)
+      (expression_statement
+        (expression
+          (call_expression
+            (identifier)
+            (expression
+              (member_expression
+                (expression
+                  (identifier))
+                (identifier)))))))))
+
+===
+Simple TRY...CATCH...FINALLY...END TRY Statement
+===
+
+try
+  doSomething()
+catch (IOException e)
+  log(e.message)
+finally
+  cleanup()
+end try
+
+---
+
+(source_file
+  (try_statement
+    (expression_statement
+      (expression
+        (call_expression
+          (identifier))))
+    (catch_clause
+      (identifier)
+      (identifier)
+      (expression_statement
+        (expression
+          (call_expression
+            (identifier)
+            (expression
+              (member_expression
+                (expression
+                  (identifier))
+                (identifier)))))))
+    (finally_clause
+      (expression_statement
+        (expression
+          (call_expression
+            (identifier)))))))

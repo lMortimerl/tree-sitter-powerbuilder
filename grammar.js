@@ -163,6 +163,7 @@ module.exports = grammar({
         $.for_statement,
         $.loop_statement,
         $.return_statement,
+        $.try_statement,
       ),
     label_statement: ($) => seq(field("name", $.identifier), ":"),
     goto_statement: ($) =>
@@ -224,12 +225,32 @@ module.exports = grammar({
         ),
       ),
     return_statement: ($) => prec.right(seq("return", optional($.expression))),
+    try_statement: ($) =>
+      seq(
+        "try",
+        repeat($._statement),
+        repeat($.catch_clause),
+        optional($.finally_clause),
+        "end",
+        "try",
+      ),
+    catch_clause: ($) =>
+      seq(
+        "catch",
+        "(",
+        field("exception_type", $.identifier),
+        field("exception_name", $.identifier),
+        ")",
+        repeat($._statement),
+      ),
+    finally_clause: ($) => seq("finally", repeat($._statement)),
 
     /* Expressions */
     expression: ($) =>
       choice(
         $.binary_expression,
         $.call_expression,
+        $.member_expression,
         $.identifier,
         $.number,
         $.string,
@@ -244,6 +265,15 @@ module.exports = grammar({
         "{",
         optional(seq($.expression, repeat(seq(",", $.expression)))),
         "}",
+      ),
+    member_expression: ($) =>
+      prec.left(
+        18,
+        seq(
+          field("object", $.expression),
+          ".",
+          field("property", $.identifier),
+        ),
       ),
     binary_expression: ($) =>
       choice(
