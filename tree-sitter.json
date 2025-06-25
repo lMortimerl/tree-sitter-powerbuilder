@@ -1,0 +1,41 @@
+{
+  "$schema": "https://tree-sitter.github.io/tree-sitter/assets/schemas/config.schema.json",
+  "grammars": [
+    {
+      "name": "powerbuilder",
+      "camelcase": "PowerBuilder",
+      "title": "Powerbuilder",
+      "scope": "source.powerbuilder",
+      "file-types": [
+        "sru",
+        "srf",
+        "srw"
+      ],
+      "injection-regex": "^powerbuilder$",
+      "class-name": "TreeSitterPowerbuilder"
+    }
+  ],
+  "metadata": {
+    "version": "0.1.0",
+    "license": "MIT",
+    "description": "A parser for the Appeon PowerBuilder 2022 R3 scripting language",
+    "authors": [
+      {
+        "name": "Mortimer Gibbons",
+        "email": "mkirchermeier@gmail.com"
+      }
+    ],
+    "links": {
+      "repository": "https://github.com/lmortimerl/tree-sitter-powerbuilder"
+    }
+  },
+  "bindings": {
+    "c": true,
+    "go": true,
+    "node": true,
+    "python": true,
+    "rust": true,
+    "swift": true,
+    "zig": false
+  }
+}
