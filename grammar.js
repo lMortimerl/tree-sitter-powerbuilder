@@ -14,9 +14,24 @@ module.exports = grammar({
 
   rules: {
     source_file: ($) => repeat($._statement),
-    _type: ($) => choice($.primitive_type, $.array_type),
+    _type: ($) => choice($.primitive_type),
     _definition: ($) => choice(),
     _expression: ($) => choice($.identifier, $.number),
+    modifiers: ($) => choice("public", "private", "global"),
+    variable_declarator: ($) =>
+      seq(
+        field("name", $.identifier),
+        optional($.array_dimensions),
+        optional(seq("=", field("value", $.expression))),
+      ),
+    variable_declaration: ($) =>
+      seq(
+        optional($.modifiers),
+        $._type,
+        $.variable_declarator,
+        repeat(seq(",", $.variable_declarator)),
+        optional(";"),
+      ),
     comment: (_) =>
       token(
         choice(seq("//", /.*/), seq("/*", /[^*]*\*+([^/*][^*]*\*+)*/, "/")),
@@ -130,11 +145,18 @@ module.exports = grammar({
         "unsignedlong",
         "ulong",
       ),
-    array_type: ($) => seq($._type, "[", optional($.array_dimensions), "]"),
-    array_dimensions: ($) => seq($.expression, repeat(seq(",", $.expression))),
+    array_dimensions: ($) =>
+      seq(
+        "[",
+        optional(seq($.expression, repeat(seq(",", $.expression)))),
+        "]",
+      ),
+
     /* Statements */
     _statement: ($) =>
       choice(
+        $.label_statement,
+        $.goto_statement,
         $.expression_statement,
         $.variable_declaration,
         $.if_statement,
@@ -142,7 +164,9 @@ module.exports = grammar({
         $.loop_statement,
         $.return_statement,
       ),
-    variable_declaration: ($) => seq($._type, $.identifier, optional(";")),
+    label_statement: ($) => seq(field("name", $.identifier), ":"),
+    goto_statement: ($) =>
+      seq("goto", field("label", $.identifier), optional(";")),
     expression_statement: ($) => seq($.expression, optional(";")),
     if_statement: ($) =>
       seq(
@@ -212,8 +236,15 @@ module.exports = grammar({
         $.boolean,
         $.null,
         $.parenthesized_expression,
+        $.array_literal,
       ),
     assignment: ($) => seq($.identifier, "=", $.expression),
+    array_literal: ($) =>
+      seq(
+        "{",
+        optional(seq($.expression, repeat(seq(",", $.expression)))),
+        "}",
+      ),
     binary_expression: ($) =>
       choice(
         ...[

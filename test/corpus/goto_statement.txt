@@ -1,0 +1,17 @@
+===
+Simple GOTO statement
+===
+
+label:
+goto label
+goto label;
+
+---
+
+(source_file
+    (label_statement
+        name: (identifier))
+    (goto_statement
+        label: (identifier))
+    (goto_statement
+        label: (identifier)))

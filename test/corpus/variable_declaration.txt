@@ -1,19 +1,131 @@
 ===
 Variable declaration
 ===
-int a;
+
+int a
+
 ---
+
 (source_file
   (variable_declaration
     (primitive_type)
-    (identifier)))
+      (variable_declarator
+        (identifier))))
 
 ===
 Variable declaration - Semicolon
 ===
+
 int b;
+---
+
+(source_file
+  (variable_declaration
+    (primitive_type)
+      (variable_declarator
+        (identifier))))
+
+===
+Variable declaration and initialization
+===
+
+int a = 10
+
+---
+
+(source_file
+  (variable_declaration
+    (primitive_type)
+      (variable_declarator
+        (identifier)
+          (expression
+            (number)))))
+
+===
+Variable declaration and initialization - Semicolon
+===
+
+int a = 10;
+
+---
+
+(source_file
+  (variable_declaration
+    (primitive_type)
+      (variable_declarator
+        (identifier)
+          (expression
+            (number)))))
+
+===
+Variable declaration - multiple
+===
+
+int a, b, c
+
+---
+(source_file
+    (variable_declaration
+        (primitive_type)
+        (variable_declarator
+            (identifier))
+        (variable_declarator
+            (identifier))
+        (variable_declarator
+            (identifier))))
+
+===
+Variable declaration - multiple - Semicolon
+===
+
+int a, b, c
+
+---
+(source_file
+    (variable_declaration
+        (primitive_type)
+        (variable_declarator
+            (identifier))
+        (variable_declarator
+            (identifier))
+        (variable_declarator
+            (identifier))))
+
+===
+Variable declaration and initialization - multiple
+===
+
+int a = 1, b = 2
+
 ---
 (source_file
   (variable_declaration
     (primitive_type)
-    (identifier)))
+    (variable_declarator
+      (identifier)
+      (expression
+        (number)))
+    (variable_declarator
+      (identifier)
+      (expression
+        (number)))))
+
+===
+Variable declaration and initialization - multiple - Semicolon
+===
+
+int a = 1, b = 2;
+
+---
+
+(source_file
+  (variable_declaration
+    (primitive_type)
+    (variable_declarator
+      (identifier)
+      (expression
+        (number)))
+    (variable_declarator
+      (identifier)
+      (expression
+        (number)))))

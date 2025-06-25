@@ -1,0 +1,16 @@
+===
+Simple Label
+===
+
+start:
+func_call()
+
+---
+
+(source_file
+    (label_statement
+        name: (identifier))
+    (expression_statement
+        (expression
+            (call_expression
+                function: (identifier)))))

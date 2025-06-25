@@ -1,0 +1,111 @@
+====
+Array variable declaration
+====
+
+integer myArray[]
+
+---
+
+(source_file
+  (variable_declaration
+    (primitive_type)
+    (variable_declarator
+      (identifier)
+      (array_dimensions))))
+
+====
+Array variable declaration - Semicolon
+====
+
+integer myArray[];
+
+---
+
+(source_file
+  (variable_declaration
+    (primitive_type)
+    (variable_declarator
+      (identifier)
+      (array_dimensions))))
+
+====
+Array variable declaration - multiple
+====
+
+integer myArray[], myArray2[]
+
+---
+
+(source_file
+(variable_declaration
+    (primitive_type)
+        (variable_declarator
+              (identifier)
+                    (array_dimensions))
+        (variable_declarator
+              (identifier)
+                    (array_dimensions))))
+
+====
+Array variable declaration - Multiple - Semicolon
+====
+
+integer myArray[], myArray2[]
+
+---
+
+(source_file
+(variable_declaration
+    (primitive_type)
+        (variable_declarator
+              (identifier)
+                    (array_dimensions))
+        (variable_declarator
+              (identifier)
+                    (array_dimensions))))
+
+====
+Array variable declaration and initialization
+====
+
+integer myArray[] = {1, 2, 3}
+
+---
+
+(source_file
+  (variable_declaration
+    (primitive_type)
+    (variable_declarator
+      (identifier)
+      (array_dimensions)
+      (expression
+        (array_literal
+          (expression
+            (number))
+          (expression
+            (number))
+          (expression
+            (number)))))))
+
+====
+Array variable declaration and initialization - Semicolon
+====
+
+integer myArray[] = {1, 2, 3};
+
+---
+
+(source_file
+  (variable_declaration
+    (primitive_type)
+    (variable_declarator
+      (identifier)
+      (array_dimensions)
+      (expression
+        (array_literal
+          (expression
+            (number))
+          (expression
+            (number))
+          (expression
+            (number)))))))
