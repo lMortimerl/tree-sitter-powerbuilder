@@ -38,8 +38,7 @@ int a = 10
     (primitive_type)
       (variable_declarator
         (identifier)
-          (expression
-            (number)))))
+            (number))))
 
 ===
 Variable declaration and initialization - Semicolon
@@ -54,8 +53,7 @@ int a = 10;
     (primitive_type)
       (variable_declarator
         (identifier)
-          (expression
-            (number)))))
+            (number))))
 
 ===
 Variable declaration - multiple
@@ -103,12 +101,10 @@ int a = 1, b = 2
     (primitive_type)
     (variable_declarator
       (identifier)
-      (expression
-        (number)))
+        (number))
     (variable_declarator
       (identifier)
-      (expression
-        (number)))))
+        (number))))
 
 ===
 Variable declaration and initialization - multiple - Semicolon
@@ -123,9 +119,7 @@ int a = 1, b = 2;
     (primitive_type)
     (variable_declarator
       (identifier)
-      (expression
-        (number)))
+        (number))
     (variable_declarator
       (identifier)
-      (expression
-        (number)))))
+        (number))))

@@ -1,0 +1,41 @@
+===
+Simple method call
+===
+myObj.doSomething()
+---
+(source_file
+(expression_statement
+    (call_expression
+      function: (member_expression
+          object: (identifier)
+          property: (identifier)))))
+
+===
+Chained method call
+===
+a.b().c(d)
+---
+(source_file
+    (expression_statement
+        (call_expression
+            function: (member_expression
+                object: (call_expression
+                    function: (member_expression
+                        object: (identifier)
+                property: (identifier)))
+            property: (identifier))
+            (identifier))))
+
+===
+Assignment with method call
+===
+ll3 = dw_z.getrow()
+---
+(source_file
+(expression_statement
+    (binary_expression
+      left: (identifier)
+      right: (call_expression
+          function: (member_expression
+              object: (identifier)
+              property: (identifier))))))

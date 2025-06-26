@@ -78,14 +78,10 @@ integer myArray[] = {1, 2, 3}
     (variable_declarator
       (identifier)
       (array_dimensions)
-      (expression
         (array_literal
-          (expression
-            (number))
-          (expression
-            (number))
-          (expression
-            (number)))))))
+              (number)
+              (number)
+              (number)))))
 
 ====
 Array variable declaration and initialization - Semicolon
@@ -101,11 +97,7 @@ integer myArray[] = {1, 2, 3};
     (variable_declarator
       (identifier)
       (array_dimensions)
-      (expression
         (array_literal
-          (expression
-            (number))
-          (expression
-            (number))
-          (expression
-            (number)))))))
+              (number)
+              (number)
+              (number)))))

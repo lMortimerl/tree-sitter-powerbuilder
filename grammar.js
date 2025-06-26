@@ -9,10 +9,11 @@
 
 module.exports = grammar({
   name: "powerbuilder",
-  externals: $ => [
-    $.block_comment,
+  externals: ($) => [$.block_comment],
+  conflicts: ($) => [
+    [$._expression, $.case_expression],
+    [$.binary_expression, $.relational_expression],
   ],
-  conflicts: ($) => [[$.expression, $.call_expression]],
   extras: ($) => [/\s/, $.block_comment, $.line_comment],
 
   rules: {
@@ -31,7 +32,7 @@ module.exports = grammar({
     number: ($) => /\d+(\.\d+)?/,
     string: ($) =>
       seq(
-        '"',
+        '["]',
         repeat(
           choice(
             // Normal characters except for quotes and tildes
@@ -40,7 +41,7 @@ module.exports = grammar({
             $.escape_sequence,
           ),
         ),
-        '"',
+        '["]',
       ),
     escape_sequence: ($) =>
       token.immediate(
@@ -63,7 +64,7 @@ module.exports = grammar({
     array_literal: ($) =>
       seq(
         "{",
-        optional(seq($.expression, repeat(seq(",", $.expression)))),
+        optional(seq($._expression, repeat(seq(",", $._expression)))),
         "}",
       ),
 
@@ -98,8 +99,9 @@ module.exports = grammar({
       ),
 
     /* Expressions */
-    expression: ($) =>
+    _expression: ($) =>
       choice(
+        $.assignment_expression,
         $.binary_expression,
         $.call_expression,
         $.member_expression,
@@ -111,16 +113,7 @@ module.exports = grammar({
         $.parenthesized_expression,
         $.array_literal,
       ),
-    assignment: ($) => seq($.identifier, "=", $.expression),
-    member_expression: ($) =>
-      prec.left(
-        18,
-        seq(
-          field("object", $.expression),
-          ".",
-          field("property", $.identifier),
-        ),
-      ),
+    assignment: ($) => seq($.identifier, "=", $._expression),
     binary_expression: ($) =>
       choice(
         ...[
@@ -140,53 +133,84 @@ module.exports = grammar({
           prec.left(
             precedence,
             seq(
-              field("left", $.expression),
+              field("left", $._expression),
               operator,
-              field("right", $.expression),
+              field("right", $._expression),
             ),
           ),
         ),
       ),
-    parenthesized_expression: ($) => seq("(", $.expression, ")"),
+    relational_expression: ($) =>
+      prec.left(
+        5,
+        seq(
+          field("left", $._expression),
+          choice("<", "<=", ">", ">=", "=", "<>"),
+          field("right", $._expression),
+        ),
+      ),
+    partial_relational_expression: ($) =>
+      seq(choice("<", "<=", ">", ">=", "=", "<>"), $._expression),
+    parenthesized_expression: ($) => seq("(", $._expression, ")"),
+    member_expression: ($) =>
+      prec.left(
+        18,
+        seq(
+          field("object", $._expression),
+          ".",
+          field("property", $.identifier),
+        ),
+      ),
     call_expression: ($) =>
-      seq(
-        field("function", $.identifier),
-        "(",
-        optional(seq($.expression, repeat(seq(",", $.expression)))),
-        ")",
+      prec.left(
+        20,
+        seq(
+          field("function", $._expression),
+          "(",
+          optional(seq($._expression, repeat(seq(",", $._expression)))),
+          ")",
+        ),
+      ),
+    assignment_expression: ($) =>
+      prec.right(
+        1,
+        seq(field("left", $.identifier), "=", field("right", $._expression)),
       ),
 
     /* Statements */
     _statement: ($) =>
-      choice(
-        $.label_statement,
-        $.goto_statement,
-        $.expression_statement,
-        $.variable_declaration,
-        $.if_statement,
-        $.for_statement,
-        $.loop_statement,
-        $.return_statement,
-        $.try_statement,
-        $.throw_statement,
-        $.create_statement,
-        $.destroy_statement,
-        $.halt_statement,
-        $.choose_statement,
-        $.call_statement,
+      seq(
+        choice(
+          $.label_statement,
+          $.goto_statement,
+          $.expression_statement,
+          $.variable_declaration,
+          $.if_statement,
+          $.for_statement,
+          $.loop_statement,
+          $.return_statement,
+          $.try_statement,
+          $.throw_statement,
+          $.create_statement,
+          $.destroy_statement,
+          $.halt_statement,
+          $.choose_statement,
+          $.call_statement,
+        ),
+        optional(";"),
       ),
     label_statement: ($) => seq(field("name", $.identifier), ":"),
-    goto_statement: ($) =>
-      seq("goto", field("label", $.identifier), optional(";")),
-    expression_statement: ($) => seq($.expression, optional(";")),
+    goto_statement: ($) => seq("goto", field("label", $.identifier)),
+    expression_statement: ($) => seq($._expression),
     if_statement: ($) =>
       seq(
         "if",
-        field("condition", $.expression),
+        field("condition", $._expression),
         "then",
         choice(
           prec(1, $.return_statement),
-          seq(repeat($._statement),
+          seq(
+            repeat($._statement),
             repeat($.elseif_clause),
             optional($.else_clause),
             "end",
@@ -197,7 +221,7 @@ module.exports = grammar({
     elseif_clause: ($) =>
       seq(
         "elseif",
-        field("condition", $.expression),
+        field("condition", $._expression),
         "then",
         repeat($._statement),
       ),
@@ -207,8 +231,8 @@ module.exports = grammar({
         "for",
         field("start", $.assignment),
         "to",
-        field("end", $.expression),
-        optional(field("step", seq("step", $.expression))),
+        field("end", $._expression),
+        optional(field("step", seq("step", $._expression))),
         field("body", repeat($._statement)),
         choice("next", seq("end", "for")),
       ),
@@ -218,13 +242,13 @@ module.exports = grammar({
         choice(
           seq(
             "until",
-            field("condition", $.expression),
+            field("condition", $._expression),
             field("body", repeat($._statement)),
             "loop",
           ),
           seq(
             "while",
-            field("condition", $.expression),
+            field("condition", $._expression),
             field("body", repeat($._statement)),
             "loop",
           ),
@@ -232,16 +256,14 @@ module.exports = grammar({
             field("body", repeat($._statement)),
             "loop",
             choice(
-              seq("while", field("condition", $.expression)),
-              seq("until", field("condition", $.expression)),
+              seq("while", field("condition", $._expression)),
+              seq("until", field("condition", $._expression)),
             ),
           ),
         ),
       ),
-    return_statement: ($) =>
-      prec.right(seq("return", optional($.expression), optional(";"))),
-    throw_statement: ($) =>
-      seq("throw", field("expression", $.expression), optional(";")),
+    return_statement: ($) => prec.right(seq("return", optional($._expression))),
+    throw_statement: ($) => seq("throw", field("expression", $._expression)),
     try_statement: ($) =>
       seq(
         "try",
@@ -261,15 +283,14 @@ module.exports = grammar({
         repeat($._statement),
       ),
     finally_clause: ($) => seq("finally", repeat($._statement)),
-    create_statement: ($) =>
-      seq("create", optional("using"), $.identifier, optional(";")),
-    destroy_statement: ($) => seq("destroy", $.identifier, optional(";")),
-    halt_statement: ($) => seq("halt", optional("close"), optional(";")),
+    create_statement: ($) => seq("create", optional("using"), $.identifier),
+    destroy_statement: ($) => seq("destroy", $.identifier),
+    halt_statement: ($) => seq("halt", optional("close")),
     choose_statement: ($) =>
       seq(
         "choose",
         "case",
-        field("value", $.expression),
+        field("value", $._expression),
         repeat($.case_clause),
         optional($.case_else_clause),
         "end",
@@ -285,11 +306,19 @@ module.exports = grammar({
     case_expression_list: ($) =>
       seq($.case_expression, repeat(seq(",", $.case_expression))),
     case_expression: ($) =>
-      choice(
-        $.expression,
-        seq("is", choice("<", ">", "<=", ">=", "<>", "="), $.expression),
-        seq($.expression, "to", $.expression),
+      seq(
+        optional("is"),
+        choice(
+          $.range_expression,
+          $.relational_expression,
+          $.binary_expression,
+          $.partial_relational_expression,
+          $.number,
+          $.identifier,
+          $.string,
+        ),
       ),
+    range_expression: ($) => seq($.number, "to", $.number),
     call_statement: ($) =>
       seq(
         "call",
@@ -304,7 +333,7 @@ module.exports = grammar({
       seq(
         field("name", $.identifier),
         optional($.array_dimensions),
-        optional(seq("=", field("value", $.expression))),
+        optional(seq("=", field("value", $._expression))),
       ),
     variable_declaration: ($) =>
       seq(
@@ -312,12 +341,11 @@ module.exports = grammar({
         $._type,
         $.variable_declarator,
         repeat(seq(",", $.variable_declarator)),
-        optional(";"),
       ),
     array_dimensions: ($) =>
       seq(
         "[",
-        optional(seq($.expression, repeat(seq(",", $.expression)))),
+        optional(seq($._expression, repeat(seq(",", $._expression)))),
         "]",
       ),
     operator: (_) =>

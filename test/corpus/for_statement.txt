@@ -12,14 +12,11 @@ next
   (for_statement
     start: (assignment
         (identifier)
-        (expression
-            (number)))
-    end: (expression
-        (number))
+            (number))
+    end: (number)
     body: (expression_statement
-        (expression
             (call_expression
-                function: (identifier))))))
+                function: (identifier)))))
 
 ===
 Simple FOR...NEXT Statement (With STEP)
@@ -35,16 +32,12 @@ next
   (for_statement
     start: (assignment
         (identifier)
-        (expression
-            (number)))
-    end: (expression
-        (number))
-    step: (expression
-        (number))
+            (number))
+    end: (number)
+    step: (number)
     body: (expression_statement
-        (expression
             (call_expression
-                function: (identifier))))))
+                function: (identifier)))))
 
 ===
 Simple FOR...END FOR Statement
@@ -60,14 +53,11 @@ end for
   (for_statement
     start: (assignment
         (identifier)
-        (expression
-            (number)))
-    end: (expression
-        (number))
+            (number))
+    end: (number)
     body: (expression_statement
-        (expression
             (call_expression
-                function: (identifier))))))
+                function: (identifier)))))
 
 ===
 Simple FOR...END FOR Statement (With STEP)
@@ -83,13 +73,9 @@ end for
   (for_statement
     start: (assignment
         (identifier)
-        (expression
-            (number)))
-    end: (expression
-        (number))
-    step: (expression
-        (number))
+            (number))
+    end: (number)
+    step: (number)
     body: (expression_statement
-        (expression
             (call_expression
-                function: (identifier))))))
+                function: (identifier)))))

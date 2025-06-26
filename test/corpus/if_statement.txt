@@ -10,15 +10,11 @@ end if
 
 (source_file
   (if_statement
-    condition: (expression
-        (binary_expression
-            left: (expression
-                (identifier))
-            right: (expression
-                (number))))
+    condition: (binary_expression
+            left: (identifier)
+            right: (number))
     (return_statement
-        (expression
-            (boolean)))))
+            (boolean))))
 
 ===
 Simple IF...ELSE...END IF Statement
@@ -34,19 +30,14 @@ end if
 
 (source_file
     (if_statement
-        condition: (expression
-            (binary_expression
-                left: (expression
-                    (identifier))
-                right: (expression
-                    (number))))
+        condition: (binary_expression
+                left: (identifier)
+                right: (number))
         (return_statement
-            (expression
-                (boolean)))
+                (boolean))
         (else_clause
           (return_statement
-            (expression
-              (boolean))))))
+              (boolean)))))
 
 ===
 Simple IF...ELSEIF...END IF Statement
@@ -62,25 +53,17 @@ end if
 
 (source_file
   (if_statement
-    condition: (expression
-      (binary_expression
-        left: (expression
-          (identifier))
-        right: (expression
-          (number))))
+    condition: (binary_expression
+        left: (identifier)
+        right: (number))
     (return_statement
-      (expression
-        (boolean)))
+        (boolean))
     (elseif_clause
-      condition: (expression
-        (binary_expression
-          left: (expression
-            (identifier))
-          right: (expression
-            (number))))
+      condition: (binary_expression
+          left: (identifier)
+          right: (number))
       (return_statement
-        (expression
-          (boolean))))))
+          (boolean)))))
 ===
 Simple IF...ELSEIF...ELSE..END IF Statement
 ===
@@ -97,26 +80,17 @@ end if
 
 (source_file
   (if_statement
-    condition: (expression
-      (binary_expression
-        left: (expression
-          (identifier))
-        right: (expression
-          (number))))
+    condition: (binary_expression
+        left: (identifier)
+        right: (number))
     (return_statement
-      (expression
-        (boolean)))
+        (boolean))
     (elseif_clause
-      condition: (expression
-        (binary_expression
-          left: (expression
-            (identifier))
-          right: (expression
-            (number))))
+      condition: (binary_expression
+          left: (identifier)
+          right: (number))
       (return_statement
-        (expression
-          (boolean))))
+          (boolean)))
     (else_clause
       (return_statement
-        (expression
-          (boolean))))))
+          (boolean)))))

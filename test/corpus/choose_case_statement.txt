@@ -5,77 +5,41 @@ CHOOSE CASE simple
 choose case weight
     case is < 16
         postage = weight * 0.30
-        method = "usps"
     case 16 to 48
         postage = 4.50
-        method = "ups"
     case else
         postage = 25.00
-        method = "fedex"
 end choose
 
 ---
 
 (source_file
   (choose_statement
-    (expression
-      (identifier))
+    value: (identifier)
     (case_clause
-      (case_expression_list
+      conditions: (case_expression_list
         (case_expression
-          (expression
+          (partial_relational_expression
+              (number))))
+      (expression_statement
+          (assignment_expression
+            left: (identifier)
+            right: (binary_expression
+              left: (identifier)
+              right: (number)))))
+    (case_clause
+      conditions: (case_expression_list
+        (case_expression
+          (range_expression
+            (number)
             (number))))
       (expression_statement
-        (expression
-          (binary_expression
-            (expression
-              (identifier))
-            (expression
-              (binary_expression
-                (expression
-                  (identifier))
-                (expression
-                  (number)))))))
-      (expression_statement
-        (expression
-          (binary_expression
-            (expression
-              (identifier))
-            (expression
-              (string))))))
-    (case_clause
-      (case_expression_list
-        (case_expression
-          (expression
-            (number))
-          (expression
-            (number))))
-      (expression_statement
-        (expression
-          (binary_expression
-            (expression
-              (identifier))
-            (expression
-              (number)))))
-      (expression_statement
-        (expression
-          (binary_expression
-            (expression
-              (identifier))
-            (expression
-              (string))))))
+          (assignment_expression
+            left: (identifier)
+            right: (number))))
     (case_else_clause
       (expression_statement
-        (expression
-          (binary_expression
-            (expression
-              (identifier))
-            (expression
-              (number)))))
-      (expression_statement
-        (expression
-          (binary_expression
-            (expression
-              (identifier))
-            (expression
-              (string))))))))
+          (assignment_expression
+            left: (identifier)
+            right: (number))))))
+

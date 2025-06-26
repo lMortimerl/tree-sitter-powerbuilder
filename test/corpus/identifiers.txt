@@ -12,20 +12,14 @@ part#number123
 
 (source_file
     (expression_statement
-        (expression
-            (identifier)))
+            (identifier))
     (expression_statement
-        (expression
-            (identifier)))
+            (identifier))
     (expression_statement
-        (expression
-            (identifier)))
+            (identifier))
     (expression_statement
-        (expression
-            (identifier)))
+            (identifier))
     (expression_statement
-        (expression
-            (identifier)))
+            (identifier))
     (expression_statement
-        (expression
-            (identifier))))
+            (identifier)))

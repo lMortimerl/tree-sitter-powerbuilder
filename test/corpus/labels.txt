@@ -11,6 +11,5 @@ func_call()
     (label_statement
         name: (identifier))
     (expression_statement
-        (expression
             (call_expression
-                function: (identifier)))))
+                function: (identifier))))

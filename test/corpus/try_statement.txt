@@ -11,23 +11,19 @@ end try
 ---
 
 (source_file
-  (try_statement
-    (expression_statement
-      (expression
-        (call_expression
-          (identifier))))
-    (catch_clause
-      (identifier)
-      (identifier)
-      (expression_statement
-        (expression
-          (call_expression
+    (try_statement
+        (expression_statement
+            (call_expression
+                (identifier)))
+        (catch_clause
             (identifier)
-            (expression
-              (member_expression
-                (expression
-                  (identifier))
-                (identifier)))))))))
+            (identifier)
+            (expression_statement
+                (call_expression
+                    (identifier)
+                    (member_expression
+                        (identifier)
+                    (identifier)))))))
 
 ===
 Simple TRY...CATCH...FINALLY...END TRY Statement
@@ -44,25 +40,20 @@ end try
 ---
 
 (source_file
-  (try_statement
-    (expression_statement
-      (expression
-        (call_expression
-          (identifier))))
-    (catch_clause
-      (identifier)
-      (identifier)
-      (expression_statement
-        (expression
-          (call_expression
+    (try_statement
+        (expression_statement
+            (call_expression
+                (identifier)))
+        (catch_clause
             (identifier)
-            (expression
-              (member_expression
-                (expression
-                  (identifier))
-                (identifier)))))))
-    (finally_clause
-      (expression_statement
-        (expression
-          (call_expression
-            (identifier)))))))
+            (identifier)
+            (expression_statement
+                (call_expression
+                    (identifier)
+                    (member_expression
+                        (identifier)
+                (identifier)))))
+        (finally_clause
+          (expression_statement
+            (call_expression
+              (identifier))))))
