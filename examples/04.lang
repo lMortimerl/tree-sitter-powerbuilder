@@ -1,3 +1,0 @@
-do until a = 10
-    a = a + 1
-loop

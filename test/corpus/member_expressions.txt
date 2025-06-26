@@ -28,7 +28,7 @@ a.b().c(d)
                         object: (identifier)
                 property: (identifier)))
             property: (identifier))
-            (identifier))))
+            arguments: (identifier))))
 
 ===
 Assignment with method call

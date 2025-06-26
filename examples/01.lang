@@ -1,10 +1,8 @@
-integer x
-integer x;
-x = 42
-x = 42;
-y = x + 1
-y = x + 1;
-z = (x + y) * 2
-z = (x + y) * 2;
-flag = x > 10 and y < 20
-flag = x > 10 and y < 20;
+choose case weight
+    case is < 16
+        postage = weight * 0.30
+    case 16 to 48
+        postage = 4.50
+    case else
+        postage = 25.00
+end choose

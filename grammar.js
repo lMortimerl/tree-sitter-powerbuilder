@@ -107,7 +107,6 @@ module.exports = grammar({
         $.array_literal,
         $.assignment_expression,
       ),
-    assignment: ($) => seq($.identifier, "=", $._expression),
     binary_expression: ($) =>
       choice(
         ...[
@@ -161,7 +160,12 @@ module.exports = grammar({
         seq(
           field("function", $._expression),
           "(",
-          optional(seq($._expression, repeat(seq(",", $._expression)))),
+          optional(
+            field(
+              "arguments",
+              seq($._expression, repeat(seq(",", $._expression))),
+            ),
+          ),
           ")",
         ),
       ),
@@ -242,7 +246,7 @@ module.exports = grammar({
     for_statement: ($) =>
       seq(
         "for",
-        field("start", $.assignment),
+        field("start", $.assignment_expression),
         "to",
         field("end", $._expression),
         optional(field("step", seq("step", $._expression))),

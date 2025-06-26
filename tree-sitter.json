@@ -6,11 +6,7 @@
       "camelcase": "PowerBuilder",
       "title": "Powerbuilder",
       "scope": "source.powerbuilder",
-      "file-types": [
-        "sru",
-        "srf",
-        "srw"
-      ],
+      "file-types": ["sru", "srf", "srw"],
       "injection-regex": "^powerbuilder$",
       "class-name": "TreeSitterPowerbuilder"
     }
@@ -39,3 +35,4 @@
     "zig": false
   }
 }
+

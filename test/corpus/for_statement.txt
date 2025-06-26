@@ -10,9 +10,9 @@ next
 
 (source_file
   (for_statement
-    start: (assignment
-        (identifier)
-            (number))
+    start: (assignment_expression
+        left: (identifier)
+        right: (number))
     end: (number)
     body: (expression_statement
             (call_expression
@@ -30,9 +30,9 @@ next
 
 (source_file
   (for_statement
-    start: (assignment
-        (identifier)
-            (number))
+    start: (assignment_expression
+        left: (identifier)
+        right: (number))
     end: (number)
     step: (number)
     body: (expression_statement
@@ -51,9 +51,9 @@ end for
 
 (source_file
   (for_statement
-    start: (assignment
-        (identifier)
-            (number))
+    start: (assignment_expression
+        left: (identifier)
+        right: (number))
     end: (number)
     body: (expression_statement
             (call_expression
@@ -71,9 +71,9 @@ end for
 
 (source_file
   (for_statement
-    start: (assignment
-        (identifier)
-            (number))
+    start: (assignment_expression
+        left: (identifier)
+        right: (number))
     end: (number)
     step: (number)
     body: (expression_statement

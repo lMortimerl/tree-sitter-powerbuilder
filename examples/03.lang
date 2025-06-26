@@ -1,3 +1,0 @@
-for a = 0 to 25
-    func()
-next
