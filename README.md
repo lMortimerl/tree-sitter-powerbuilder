@@ -1,4 +1,4 @@
-# tree-sitter-powerbuilder
+# tree-sitter-powerscript
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
@@ -86,4 +86,4 @@ Feel free to contribute or raise issues to help improve this parser!
 
 _Author:_ Mortimer Gibbons  
 _Contact:_ mkirchermeier@gmail.com  
-_Repository:_ [https://github.com/lmortimerl/tree-sitter-powerbuilder](https://github.com/lmortimerl/tree-sitter-powerbuilder)
+_Repository:_ [https://github.com/lmortimerl/tree-sitter-powerscript](https://github.com/lmortimerl/tree-sitter-powerscript)
