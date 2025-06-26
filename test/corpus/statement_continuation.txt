@@ -1,0 +1,19 @@
+===
+Basic Continuation
+===
+
+string myStr = "Hello "&
++ "World!"
+
+---
+
+(source_file
+  (variable_declaration
+    (primitive_type)
+    (variable_declarator
+      (identifier)
+      (binary_expression
+        (string
+          (string_fragment))
+        (string
+          (string_fragment))))))

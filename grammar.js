@@ -14,7 +14,12 @@ module.exports = grammar({
     [$._expression, $.case_expression],
     [$.binary_expression, $.relational_expression],
   ],
-  extras: ($) => [/\s/, $.block_comment, $.line_comment],
+  extras: ($) => [
+    /\s/,
+    $.block_comment,
+    $.line_comment,
+    token(seq("&", /\r?\n/)),
+  ],
 
   rules: {
     source_file: ($) => repeat($._statement),
