@@ -1,13 +1,13 @@
 [package]
-name = "tree-sitter-powerbuilder"
-description = "A parser for the Appeon PowerBuilder 2022 R3 scripting language"
+name = "tree-sitter-powerscript"
+description = "A parser for the Appeon PowerBuilder 2022 R3 scripting language "PowerScript""
 version = "0.1.0"
 authors = ["Mortimer Gibbons <mkirchermeier@gmail.com>"]
 license = "MIT"
 readme = "README.md"
-keywords = ["incremental", "parsing", "tree-sitter", "powerbuilder"]
+keywords = ["incremental", "parsing", "tree-sitter", "powerscript"]
 categories = ["parser-implementations", "parsing", "text-editors"]
-repository = "https://github.com/lmortimerl/tree-sitter-powerbuilder"
+repository = "https://github.com/lmortimerl/tree-sitter-powerscript"
 edition = "2021"
 autoexamples = false
 

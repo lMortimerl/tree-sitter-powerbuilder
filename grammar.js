@@ -8,7 +8,7 @@
 // @ts-check
 
 module.exports = grammar({
-  name: "powerbuilder",
+  name: "powerscript",
   externals: ($) => [$.block_comment],
   conflicts: ($) => [
     [$._expression, $.case_expression],

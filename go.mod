@@ -1,4 +1,4 @@
-module github.com/lmortimerl/tree-sitter-powerbuilder
+module github.com/lmortimerl/tree-sitter-powerscript
 
 go 1.22
 

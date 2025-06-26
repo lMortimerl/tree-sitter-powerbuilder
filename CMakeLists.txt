@@ -1,9 +1,9 @@
 cmake_minimum_required(VERSION 3.13)
 
-project(tree-sitter-powerbuilder
+project(tree-sitter-powerscript
         VERSION "0.1.0"
-        DESCRIPTION "A parser for the Appeon PowerBuilder 2022 R3 scripting language"
-        HOMEPAGE_URL "https://github.com/lmortimerl/tree-sitter-powerbuilder"
+        DESCRIPTION "A parser for the Appeon PowerBuilder 2022 R3 scripting language "PowerScript""
+        HOMEPAGE_URL "https://github.com/lmortimerl/tree-sitter-powerscript"
         LANGUAGES C)
 
 option(BUILD_SHARED_LIBS "Build using shared libraries" ON)
@@ -26,40 +26,40 @@ add_custom_command(OUTPUT "${CMAKE_CURRENT_SOURCE_DIR}/src/parser.c"
                    WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
                    COMMENT "Generating parser.c")
 
-add_library(tree-sitter-powerbuilder src/parser.c)
+add_library(tree-sitter-powerscript src/parser.c)
 if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/src/scanner.c)
-  target_sources(tree-sitter-powerbuilder PRIVATE src/scanner.c)
+  target_sources(tree-sitter-powerscript PRIVATE src/scanner.c)
 endif()
-target_include_directories(tree-sitter-powerbuilder
+target_include_directories(tree-sitter-powerscript
                            PRIVATE src
                            INTERFACE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/bindings/c>
                                      $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
 
-target_compile_definitions(tree-sitter-powerbuilder PRIVATE
+target_compile_definitions(tree-sitter-powerscript PRIVATE
                            $<$<BOOL:${TREE_SITTER_REUSE_ALLOCATOR}>:TREE_SITTER_REUSE_ALLOCATOR>
                            $<$<CONFIG:Debug>:TREE_SITTER_DEBUG>)
 
-set_target_properties(tree-sitter-powerbuilder
+set_target_properties(tree-sitter-powerscript
                       PROPERTIES
                       C_STANDARD 11
                       POSITION_INDEPENDENT_CODE ON
                       SOVERSION "${TREE_SITTER_ABI_VERSION}.${PROJECT_VERSION_MAJOR}"
                       DEFINE_SYMBOL "")
 
-configure_file(bindings/c/tree-sitter-powerbuilder.pc.in
-               "${CMAKE_CURRENT_BINARY_DIR}/tree-sitter-powerbuilder.pc" @ONLY)
+configure_file(bindings/c/tree-sitter-powerscript.pc.in
+               "${CMAKE_CURRENT_BINARY_DIR}/tree-sitter-powerscript.pc" @ONLY)
 
 install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/bindings/c/tree_sitter"
         DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}"
         FILES_MATCHING PATTERN "*.h")
-install(FILES "${CMAKE_CURRENT_BINARY_DIR}/tree-sitter-powerbuilder.pc"
+install(FILES "${CMAKE_CURRENT_BINARY_DIR}/tree-sitter-powerscript.pc"
         DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig")
-install(TARGETS tree-sitter-powerbuilder
+install(TARGETS tree-sitter-powerscript
         LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}")
 
 file(GLOB QUERIES queries/*.scm)
 install(FILES ${QUERIES}
-        DESTINATION "${CMAKE_INSTALL_DATADIR}/tree-sitter/queries/powerbuilder")
+        DESTINATION "${CMAKE_INSTALL_DATADIR}/tree-sitter/queries/powerscript")
 
 add_custom_target(ts-test "${TREE_SITTER_CLI}" test
                   WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"

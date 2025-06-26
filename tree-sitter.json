@@ -2,19 +2,21 @@
   "$schema": "https://tree-sitter.github.io/tree-sitter/assets/schemas/config.schema.json",
   "grammars": [
     {
-      "name": "powerbuilder",
-      "camelcase": "PowerBuilder",
-      "title": "Powerbuilder",
-      "scope": "source.powerbuilder",
-      "file-types": ["sru", "srf", "srw"],
-      "injection-regex": "^powerbuilder$",
-      "class-name": "TreeSitterPowerbuilder"
+      "name": "powerscript",
+      "camelcase": "PowerScript",
+      "title": "PowerScript",
+      "scope": "source.powerscript",
+      "file-types": [
+        "powerscript"
+      ],
+      "injection-regex": "^powerscript$",
+      "class-name": "TreeSitterPowerscript"
     }
   ],
   "metadata": {
     "version": "0.1.0",
     "license": "MIT",
-    "description": "A parser for the Appeon PowerBuilder 2022 R3 scripting language",
+    "description": "A parser for the Appeon PowerBuilder 2022 R3 scripting language \"PowerScript\"",
     "authors": [
       {
         "name": "Mortimer Gibbons",
@@ -22,7 +24,7 @@
       }
     ],
     "links": {
-      "repository": "https://github.com/lmortimerl/tree-sitter-powerbuilder"
+      "repository": "https://github.com/lmortimerl/tree-sitter-powerscript"
     }
   },
   "bindings": {
@@ -35,4 +37,3 @@
     "zig": false
   }
 }
-
