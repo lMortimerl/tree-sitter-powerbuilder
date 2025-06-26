@@ -47,5 +47,20 @@
     "prestart": "tree-sitter build --wasm",
     "start": "tree-sitter playground",
     "test": "node --test bindings/node/*_test.js"
-  }
+  },
+  "tree-sitter": [
+    {
+      "scope": "source.powerscript",
+      "file-types": [
+        "srw",
+        "sru",
+        "sra",
+        "srf"
+      ],
+      "injection-regex": "powerscript",
+      "highlights": [
+        "queries/highlights.scm"
+      ]
+    }
+  ]
 }

@@ -345,8 +345,12 @@
                 }
               },
               {
-                "type": "STRING",
-                "value": "+"
+                "type": "FIELD",
+                "name": "operator",
+                "content": {
+                  "type": "STRING",
+                  "value": "+"
+                }
               },
               {
                 "type": "FIELD",
@@ -374,8 +378,12 @@
                 }
               },
               {
-                "type": "STRING",
-                "value": "-"
+                "type": "FIELD",
+                "name": "operator",
+                "content": {
+                  "type": "STRING",
+                  "value": "-"
+                }
               },
               {
                 "type": "FIELD",
@@ -403,8 +411,12 @@
                 }
               },
               {
-                "type": "STRING",
-                "value": "*"
+                "type": "FIELD",
+                "name": "operator",
+                "content": {
+                  "type": "STRING",
+                  "value": "*"
+                }
               },
               {
                 "type": "FIELD",
@@ -432,8 +444,12 @@
                 }
               },
               {
-                "type": "STRING",
-                "value": "/"
+                "type": "FIELD",
+                "name": "operator",
+                "content": {
+                  "type": "STRING",
+                  "value": "/"
+                }
               },
               {
                 "type": "FIELD",
@@ -461,8 +477,12 @@
                 }
               },
               {
-                "type": "STRING",
-                "value": "<"
+                "type": "FIELD",
+                "name": "operator",
+                "content": {
+                  "type": "STRING",
+                  "value": "<"
+                }
               },
               {
                 "type": "FIELD",
@@ -490,8 +510,12 @@
                 }
               },
               {
-                "type": "STRING",
-                "value": ">"
+                "type": "FIELD",
+                "name": "operator",
+                "content": {
+                  "type": "STRING",
+                  "value": ">"
+                }
               },
               {
                 "type": "FIELD",
@@ -519,8 +543,12 @@
                 }
               },
               {
-                "type": "STRING",
-                "value": "<="
+                "type": "FIELD",
+                "name": "operator",
+                "content": {
+                  "type": "STRING",
+                  "value": "<="
+                }
               },
               {
                 "type": "FIELD",
@@ -548,8 +576,12 @@
                 }
               },
               {
-                "type": "STRING",
-                "value": ">="
+                "type": "FIELD",
+                "name": "operator",
+                "content": {
+                  "type": "STRING",
+                  "value": ">="
+                }
               },
               {
                 "type": "FIELD",
@@ -577,8 +609,12 @@
                 }
               },
               {
-                "type": "STRING",
-                "value": "<>"
+                "type": "FIELD",
+                "name": "operator",
+                "content": {
+                  "type": "STRING",
+                  "value": "<>"
+                }
               },
               {
                 "type": "FIELD",
@@ -606,8 +642,12 @@
                 }
               },
               {
-                "type": "STRING",
-                "value": "="
+                "type": "FIELD",
+                "name": "operator",
+                "content": {
+                  "type": "STRING",
+                  "value": "="
+                }
               },
               {
                 "type": "FIELD",
@@ -635,8 +675,12 @@
                 }
               },
               {
-                "type": "STRING",
-                "value": "and"
+                "type": "FIELD",
+                "name": "operator",
+                "content": {
+                  "type": "STRING",
+                  "value": "and"
+                }
               },
               {
                 "type": "FIELD",
@@ -664,8 +708,12 @@
                 }
               },
               {
-                "type": "STRING",
-                "value": "or"
+                "type": "FIELD",
+                "name": "operator",
+                "content": {
+                  "type": "STRING",
+                  "value": "or"
+                }
               },
               {
                 "type": "FIELD",
@@ -695,6 +743,56 @@
             }
           },
           {
+            "type": "FIELD",
+            "name": "operator",
+            "content": {
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": "<"
+                },
+                {
+                  "type": "STRING",
+                  "value": "<="
+                },
+                {
+                  "type": "STRING",
+                  "value": ">"
+                },
+                {
+                  "type": "STRING",
+                  "value": ">="
+                },
+                {
+                  "type": "STRING",
+                  "value": "="
+                },
+                {
+                  "type": "STRING",
+                  "value": "<>"
+                }
+              ]
+            }
+          },
+          {
+            "type": "FIELD",
+            "name": "right",
+            "content": {
+              "type": "SYMBOL",
+              "name": "_expression"
+            }
+          }
+        ]
+      }
+    },
+    "partial_relational_expression": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "FIELD",
+          "name": "operator",
+          "content": {
             "type": "CHOICE",
             "members": [
               {
@@ -722,49 +820,7 @@
                 "value": "<>"
               }
             ]
-          },
-          {
-            "type": "FIELD",
-            "name": "right",
-            "content": {
-              "type": "SYMBOL",
-              "name": "_expression"
-            }
           }
-        ]
-      }
-    },
-    "partial_relational_expression": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "STRING",
-              "value": "<"
-            },
-            {
-              "type": "STRING",
-              "value": "<="
-            },
-            {
-              "type": "STRING",
-              "value": ">"
-            },
-            {
-              "type": "STRING",
-              "value": ">="
-            },
-            {
-              "type": "STRING",
-              "value": "="
-            },
-            {
-              "type": "STRING",
-              "value": "<>"
-            }
-          ]
         },
         {
           "type": "SYMBOL",
@@ -2121,16 +2177,96 @@
         ]
       }
     },
-    "keywords": {
+    "keyword": {
       "type": "CHOICE",
       "members": [
         {
           "type": "STRING",
-          "value": "if"
+          "value": "alias"
         },
         {
           "type": "STRING",
-          "value": "then"
+          "value": "and"
+        },
+        {
+          "type": "STRING",
+          "value": "autoinstantiate"
+        },
+        {
+          "type": "STRING",
+          "value": "call"
+        },
+        {
+          "type": "STRING",
+          "value": "case"
+        },
+        {
+          "type": "STRING",
+          "value": "catch"
+        },
+        {
+          "type": "STRING",
+          "value": "choose"
+        },
+        {
+          "type": "STRING",
+          "value": "close*"
+        },
+        {
+          "type": "STRING",
+          "value": "commit"
+        },
+        {
+          "type": "STRING",
+          "value": "connect"
+        },
+        {
+          "type": "STRING",
+          "value": "constant"
+        },
+        {
+          "type": "STRING",
+          "value": "continue"
+        },
+        {
+          "type": "STRING",
+          "value": "create*"
+        },
+        {
+          "type": "STRING",
+          "value": "cursor"
+        },
+        {
+          "type": "STRING",
+          "value": "declare"
+        },
+        {
+          "type": "STRING",
+          "value": "delete"
+        },
+        {
+          "type": "STRING",
+          "value": "describe*"
+        },
+        {
+          "type": "STRING",
+          "value": "descriptor"
+        },
+        {
+          "type": "STRING",
+          "value": "destroy"
+        },
+        {
+          "type": "STRING",
+          "value": "disconnect"
+        },
+        {
+          "type": "STRING",
+          "value": "do"
+        },
+        {
+          "type": "STRING",
+          "value": "dynamic"
         },
         {
           "type": "STRING",
@@ -2142,39 +2278,35 @@
         },
         {
           "type": "STRING",
-          "value": "end if"
+          "value": "end"
         },
         {
           "type": "STRING",
-          "value": "for"
+          "value": "enumerated"
         },
         {
           "type": "STRING",
-          "value": "to"
+          "value": "event"
         },
         {
           "type": "STRING",
-          "value": "next"
+          "value": "execute"
         },
         {
           "type": "STRING",
-          "value": "do"
+          "value": "exit"
         },
         {
           "type": "STRING",
-          "value": "loop"
+          "value": "external"
         },
         {
           "type": "STRING",
-          "value": "while"
+          "value": "false"
         },
         {
           "type": "STRING",
-          "value": "try"
-        },
-        {
-          "type": "STRING",
-          "value": "catch"
+          "value": "fetch"
         },
         {
           "type": "STRING",
@@ -2182,7 +2314,19 @@
         },
         {
           "type": "STRING",
-          "value": "return"
+          "value": "first"
+        },
+        {
+          "type": "STRING",
+          "value": "for"
+        },
+        {
+          "type": "STRING",
+          "value": "forward"
+        },
+        {
+          "type": "STRING",
+          "value": "from"
         },
         {
           "type": "STRING",
@@ -2190,15 +2334,103 @@
         },
         {
           "type": "STRING",
-          "value": "end function"
-        },
-        {
-          "type": "STRING",
           "value": "global"
         },
         {
           "type": "STRING",
-          "value": "public"
+          "value": "goto"
+        },
+        {
+          "type": "STRING",
+          "value": "halt"
+        },
+        {
+          "type": "STRING",
+          "value": "if"
+        },
+        {
+          "type": "STRING",
+          "value": "immediate"
+        },
+        {
+          "type": "STRING",
+          "value": "indirect"
+        },
+        {
+          "type": "STRING",
+          "value": "insert"
+        },
+        {
+          "type": "STRING",
+          "value": "into"
+        },
+        {
+          "type": "STRING",
+          "value": "intrinsic"
+        },
+        {
+          "type": "STRING",
+          "value": "is"
+        },
+        {
+          "type": "STRING",
+          "value": "last"
+        },
+        {
+          "type": "STRING",
+          "value": "library"
+        },
+        {
+          "type": "STRING",
+          "value": "loop"
+        },
+        {
+          "type": "STRING",
+          "value": "namespace"
+        },
+        {
+          "type": "STRING",
+          "value": "native"
+        },
+        {
+          "type": "STRING",
+          "value": "next"
+        },
+        {
+          "type": "STRING",
+          "value": "not"
+        },
+        {
+          "type": "STRING",
+          "value": "of"
+        },
+        {
+          "type": "STRING",
+          "value": "on"
+        },
+        {
+          "type": "STRING",
+          "value": "open*"
+        },
+        {
+          "type": "STRING",
+          "value": "or"
+        },
+        {
+          "type": "STRING",
+          "value": "parent"
+        },
+        {
+          "type": "STRING",
+          "value": "post*"
+        },
+        {
+          "type": "STRING",
+          "value": "prepare"
+        },
+        {
+          "type": "STRING",
+          "value": "prior"
         },
         {
           "type": "STRING",
@@ -2206,27 +2438,171 @@
         },
         {
           "type": "STRING",
-          "value": "integer"
+          "value": "privateread"
         },
         {
           "type": "STRING",
-          "value": "string"
+          "value": "privatewrite"
         },
         {
           "type": "STRING",
-          "value": "boolean"
+          "value": "procedure"
         },
         {
           "type": "STRING",
-          "value": "long"
+          "value": "protected"
         },
         {
           "type": "STRING",
-          "value": "blob"
+          "value": "protectedread"
         },
         {
           "type": "STRING",
-          "value": "decimal"
+          "value": "protectedwrite"
+        },
+        {
+          "type": "STRING",
+          "value": "prototypes"
+        },
+        {
+          "type": "STRING",
+          "value": "public"
+        },
+        {
+          "type": "STRING",
+          "value": "readonly"
+        },
+        {
+          "type": "STRING",
+          "value": "ref"
+        },
+        {
+          "type": "STRING",
+          "value": "return"
+        },
+        {
+          "type": "STRING",
+          "value": "rollback"
+        },
+        {
+          "type": "STRING",
+          "value": "rpcfunc"
+        },
+        {
+          "type": "STRING",
+          "value": "select"
+        },
+        {
+          "type": "STRING",
+          "value": "selectblob"
+        },
+        {
+          "type": "STRING",
+          "value": "shared"
+        },
+        {
+          "type": "STRING",
+          "value": "static"
+        },
+        {
+          "type": "STRING",
+          "value": "step"
+        },
+        {
+          "type": "STRING",
+          "value": "subroutine"
+        },
+        {
+          "type": "STRING",
+          "value": "super"
+        },
+        {
+          "type": "STRING",
+          "value": "system"
+        },
+        {
+          "type": "STRING",
+          "value": "systemread"
+        },
+        {
+          "type": "STRING",
+          "value": "systemwrite"
+        },
+        {
+          "type": "STRING",
+          "value": "then"
+        },
+        {
+          "type": "STRING",
+          "value": "this"
+        },
+        {
+          "type": "STRING",
+          "value": "throw"
+        },
+        {
+          "type": "STRING",
+          "value": "throws"
+        },
+        {
+          "type": "STRING",
+          "value": "to"
+        },
+        {
+          "type": "STRING",
+          "value": "trigger"
+        },
+        {
+          "type": "STRING",
+          "value": "true"
+        },
+        {
+          "type": "STRING",
+          "value": "try"
+        },
+        {
+          "type": "STRING",
+          "value": "type"
+        },
+        {
+          "type": "STRING",
+          "value": "until"
+        },
+        {
+          "type": "STRING",
+          "value": "update*"
+        },
+        {
+          "type": "STRING",
+          "value": "updateblob"
+        },
+        {
+          "type": "STRING",
+          "value": "using"
+        },
+        {
+          "type": "STRING",
+          "value": "variables"
+        },
+        {
+          "type": "STRING",
+          "value": "while"
+        },
+        {
+          "type": "STRING",
+          "value": "with"
+        },
+        {
+          "type": "STRING",
+          "value": "within"
+        },
+        {
+          "type": "STRING",
+          "value": "xor"
+        },
+        {
+          "type": "STRING",
+          "value": "_debug"
         }
       ]
     }
