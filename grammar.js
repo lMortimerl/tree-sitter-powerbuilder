@@ -21,8 +21,7 @@ module.exports = grammar({
 
     /* PowerBuilder 2022 Language Basics */
     /* Comments */
-    comment: ($) => choice($.line_comment, $.block_comment),
-    line_comment: (_) => token(seq("//", /.*/)),
+    line_comment: (_) => token(seq("//", /[^\n]*/)),
 
     /* Identifiers */
     identifier: ($) =>
@@ -31,18 +30,8 @@ module.exports = grammar({
     /* Literals */
     number: ($) => /\d+(\.\d+)?/,
     string: ($) =>
-      seq(
-        '["]',
-        repeat(
-          choice(
-            // Normal characters except for quotes and tildes
-            token.immediate(/[^\n"~]+/),
-            // Escaped tilde sequences
-            $.escape_sequence,
-          ),
-        ),
-        '["]',
-      ),
+      seq('"', repeat(choice($.string_fragment, $.escape_sequence)), '"'),
+    string_fragment: ($) => token.immediate(/[^"~\n]+/),
     escape_sequence: ($) =>
       token.immediate(
         seq(
@@ -101,7 +90,6 @@ module.exports = grammar({
     /* Expressions */
     _expression: ($) =>
       choice(
-        $.assignment_expression,
         $.binary_expression,
         $.call_expression,
         $.member_expression,
@@ -112,6 +100,7 @@ module.exports = grammar({
         $.null,
         $.parenthesized_expression,
         $.array_literal,
+        $.assignment_expression,
       ),
     assignment: ($) => seq($.identifier, "=", $._expression),
     binary_expression: ($) =>
@@ -163,7 +152,7 @@ module.exports = grammar({
       ),
     call_expression: ($) =>
       prec.left(
-        20,
+        21,
         seq(
           field("function", $._expression),
           "(",
@@ -173,7 +162,7 @@ module.exports = grammar({
       ),
     assignment_expression: ($) =>
       prec.right(
-        1,
+        -1,
         seq(field("left", $.identifier), "=", field("right", $._expression)),
       ),
 
@@ -197,12 +186,31 @@ module.exports = grammar({
           $.choose_statement,
           $.call_statement,
         ),
-        optional(";"),
+        choice("\n", ";"),
       ),
     label_statement: ($) => seq(field("name", $.identifier), ":"),
     goto_statement: ($) => seq("goto", field("label", $.identifier)),
     expression_statement: ($) => seq($._expression),
     if_statement: ($) =>
+      choice(
+        seq(
+          "if",
+          field("condition", $._expression),
+          "then",
+          field("consequence", $._statement),
+        ),
+        seq(
+          "if",
+          field("condition", $._expression),
+          "then",
+          repeat($._statement),
+          repeat($.elseif_clause),
+          optional($.else_clause),
+          "end",
+          "if",
+        ),
+      ),
+    _if_statement: ($) =>
       seq(
         "if",
         field("condition", $._expression),

@@ -2,14 +2,19 @@
 String with escapes
 ===========================
 
-"This~nIs~tTabbed~h20"
+string a = "This~nIs~tTabbed~h20"
 
 ---
 
 (source_file
-  (expression_statement
-    (expression
-      (string
-        (escape_sequence)
-        (escape_sequence)
-        (escape_sequence)))))
+    (variable_declaration
+        (primitive_type)
+        (variable_declarator
+            (identifier)
+            (string
+                (string_fragment)
+                (escape_sequence)
+                (string_fragment)
+                (escape_sequence)
+                (string_fragment)
+                (escape_sequence)))))

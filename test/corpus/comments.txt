@@ -18,24 +18,66 @@ func_call();
         function: (identifier))))
 
 ===
-Multiline comment
+Block comment
 ===
 
 func_call()
-/* This comment
- * uses
- * multiple lines
- */
-func_call()
+/* Block-Comment! */
+func_call() 
 
 ---
 
 (source_file
-  (expression_statement
-      (call_expression
-        function: (identifier)))
-  (comment)
-  (expression_statement
-    (expression
-      (call_expression
-        function: (identifier)))))
+    (expression_statement
+        (call_expression
+            (identifier)))
+    (block_comment)
+    (expression_statement
+        (call_expression
+            (identifier))))
+
+===
+Block comment - multiline
+===
+
+func_call()
+/*
+ * 
+ * Block-Comment!
+ */
+func_call() 
+
+---
+
+(source_file
+    (expression_statement
+        (call_expression
+            (identifier)))
+    (block_comment)
+    (expression_statement
+        (call_expression
+            (identifier))))
+
+===
+Block comment - nested
+===
+
+func_call()
+/*
+ * Outer Comment
+ * /*
+ *  * Inner comment
+ *  */
+ */
+func_call() 
+
+---
+
+(source_file
+    (expression_statement
+        (call_expression
+            (identifier)))
+    (block_comment)
+    (expression_statement
+        (call_expression
+            (identifier))))
