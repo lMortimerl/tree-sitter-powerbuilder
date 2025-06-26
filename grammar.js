@@ -1,5 +1,5 @@
 /**
- * @file A parser for the Appeon PowerBuilder 2022 R3 scripting language
+ * @file A parser for the Appeon PowerBuilder 2022 R3 scripting language 'PowerScript'
  * @author Mortimer Gibbons <mkirchermeier@gmail.com>
  * @license MIT
  */

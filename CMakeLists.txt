@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.13)
 
 project(tree-sitter-powerscript
         VERSION "0.1.0"
-        DESCRIPTION "A parser for the Appeon PowerBuilder 2022 R3 scripting language "PowerScript""
+        DESCRIPTION "A parser for the Appeon PowerBuilder 2022 R3 scripting language 'PowerScript'"
         HOMEPAGE_URL "https://github.com/lmortimerl/tree-sitter-powerscript"
         LANGUAGES C)
 

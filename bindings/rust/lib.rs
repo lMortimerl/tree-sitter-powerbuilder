@@ -7,7 +7,7 @@
 //! let code = r#"
 //! "#;
 //! let mut parser = tree_sitter::Parser::new();
-//! let language = tree_sitter_powerbuilder::LANGUAGE;
+//! let language = tree_sitter_powerscript::LANGUAGE;
 //! parser
 //!     .set_language(&language.into())
 //!     .expect("Error loading Powerbuilder parser");
@@ -21,11 +21,11 @@
 use tree_sitter_language::LanguageFn;
 
 extern "C" {
-    fn tree_sitter_powerbuilder() -> *const ();
+    fn tree_sitter_powerscript() -> *const ();
 }
 
 /// The tree-sitter [`LanguageFn`] for this grammar.
-pub const LANGUAGE: LanguageFn = unsafe { LanguageFn::from_raw(tree_sitter_powerbuilder) };
+pub const LANGUAGE: LanguageFn = unsafe { LanguageFn::from_raw(tree_sitter_powerscript) };
 
 /// The content of the [`node-types.json`] file for this grammar.
 ///
